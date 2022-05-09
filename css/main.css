@@ -41,15 +41,17 @@ main {
 form {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: min(80%,25rem);
     margin: 1rem auto;
+    align-items: center;
 }
 form div {
     display: flex;
     margin: 1rem 0;
-    gap: 1rem;
     overflow: hidden;
     padding: 0.6rem;
+    justify-content: space-between;
+    width: 100%;
 }
 
 
@@ -82,9 +84,7 @@ select {
     appearance: none;
     background: url('https://api.iconify.design/bx/chevron-down.svg?height=28') 96% / 15% no-repeat #eee;
 }
-select::after {
-    text-align: center;
-}
+
 
 button {
     background-color: var(--prim);
@@ -93,5 +93,7 @@ button {
     font-size: 1.5rem;
     border-radius: var(--borderRad);
     margin-top: 2.5rem;
+    font-weight: bold;
+    width: 55%;
 }
   
