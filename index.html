@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Radio+Canada:wght@400;600&display=swap" rel="stylesheet"> 
-    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js" defer></script>
+    <script src="./scripts/form.js" defer></script>
     <title>SchoolSearch</title>
 </head>
 <body>
@@ -21,7 +22,9 @@
         <form action="#">
             <div>
                 <label for="location">Locatie:</label>
-                <Select>
+                <Select name="location" id="location">
+                    <option value="0">Kies optie...</option>
+                    <option value="any">Alle</option>
                     <option value="Gent">Gent</option>
                     <option value="OostAkker">Oostakker</option>
                     <option value="SintA">Sint-Amandsberg</option>
@@ -33,28 +36,37 @@
                     <option value="Zwijnaarde">Zwijnaarde</option>
                 </Select>
             </div>
+            <div id="locationErr"></div>
             <div>
                 <label for="type">Type:</label>
                 <select name="type" id="type">
+                    <option value="0">Kies optie...</option>
+                    <option value="any">Alle</option>
                     <option value="Secondary">Secundaire school</option>
                     <option value="Primary">Lagere school</option>
                 </select>
             </div>
+            <div id="typeErr"></div>
             <div>
-                <label for="aanbod">Aanbod:</label>
-                <select name="aanbod" id="aanbod">
+                <label for="offer">Aanbod:</label>
+                <select name="offer" id="offer">
+                    <option value="0">Kies optie...</option>
+                    <option value="any">Alle</option>
                     <option value="BA" class="LO">BA</option>
                     <option value="BuO" class="LO">BuO</option>
                     <option value="KO" class="LO">KO</option>
                     <option value="LO" class="LO">LO</option>
                     <option value="SO" class="SO">SO</option>
-                    <option value="BUSO" class="SO">BUSO</option>
+                    <option value="BuSO" class="SO">BUSO</option>
                     <option value="DBSO" class="SO">DBSO</option>
                 </select>
             </div>
+            <div id="offerErr"></div>
             <div>
                 <label for="method">Methode:</label>
                 <select name="method" id="method">
+                    <option value="0">Kies optie...</option>
+                    <option value="any">Alle</option>
                     <option value="Andere">Andere</option>
                     <option value="Freinet">Freinet</option>
                     <option value="Jenaplan">Jenaplan</option>
@@ -64,6 +76,7 @@
                     <option value="Montessori">Montessori</option>
                 </select>
             </div>
+            <div id="methodErr"></div>
             <button type="submit">Zoek Scholen</button>
         </form>
     </main>    

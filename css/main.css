@@ -95,5 +95,16 @@ button {
     margin-top: 2.5rem;
     font-weight: bold;
     width: 55%;
+    cursor: pointer;
+}
+#locationErr, #typeErr, #methodErr, #offerErr {
+    display: none;
+    color: red;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin: -1rem auto 0;
+}
+option:disabled {
+    display: none;
 }
   
