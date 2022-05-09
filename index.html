@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Radio+Canada:wght@400;600&display=swap" rel="stylesheet"> 
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <title>SchoolSearch</title>
+</head>
+<body>
+    <header>
+        <h1>SchoolSearch</h1>
+    </header>
+    <main>
+        <h2>Stel je zoekopdracht op:</h2>
+        <form action="#">
+            <div>
+                <label for="location">Locatie:</label>
+                <Select>
+                    <option value="Gent">Gent</option>
+                    <option value="OostAkker">Oostakker</option>
+                    <option value="SintA">Sint-Amandsberg</option>
+                    <option value="Drongen">Drongen</option>
+                    <option value="MariaKerke">MariaKerke</option>
+                    <option value="SintD">Sint-Denijs-Westrem</option>
+                    <option value="Gentbrugge">Gentbrugge</option>
+                    <option value="Ledeberg">Ledeberg</option>
+                    <option value="Zwijnaarde">Zwijnaarde</option>
+                </Select>
+            </div>
+            <div>
+                <label for="type">Type:</label>
+                <select name="type" id="type">
+                    <option value="Secondary">Secundaire school</option>
+                    <option value="Primary">Lagere school</option>
+                </select>
+            </div>
+            <div>
+                <label for="aanbod">Aanbod:</label>
+                <select name="aanbod" id="aanbod">
+                    <option value="BA" class="LO">BA</option>
+                    <option value="BuO" class="LO">BuO</option>
+                    <option value="KO" class="LO">KO</option>
+                    <option value="LO" class="LO">LO</option>
+                    <option value="SO" class="SO">SO</option>
+                    <option value="BUSO" class="SO">BUSO</option>
+                    <option value="DBSO" class="SO">DBSO</option>
+                </select>
+            </div>
+            <div>
+                <label for="method">Methode:</label>
+                <select name="method" id="method">
+                    <option value="Andere">Andere</option>
+                    <option value="Freinet">Freinet</option>
+                    <option value="Jenaplan">Jenaplan</option>
+                    <option value="EG">Ervaringsgericht onderwijs</option>
+                    <option value="Dalton">Dalton</option>
+                    <option value="Leefschool">Leefschool</option>
+                    <option value="Montessori">Montessori</option>
+                </select>
+            </div>
+            <button type="submit">Zoek Scholen</button>
+        </form>
+    </main>    
+</body>
+</html>
