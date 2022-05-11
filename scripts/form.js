@@ -1,6 +1,12 @@
 "use strict";
 
 (function() {
+    const linkBasisScholen = 'https://data.stad.gent/api/records/1.0/search/?dataset=locaties-basisscholen-gent&q=&rows=500';
+    const linkSecundaireScholen = 'https://data.stad.gent/api/records/1.0/search/?dataset=locaties-secundaire-scholen-gent&q=&rows=500';
+    let globalDataBasis;
+    let globalDataSec;
+
+    const search = document.querySelector("#search");
 
     const location = document.querySelector("#location");
     const type = document.querySelector("#type");
@@ -13,13 +19,14 @@
     const errOffer = document.querySelector("#offerErr");
     const errMethod = document.querySelector("#methodErr");
 
-    form.addEventListener('submit', e=> {
+    form.addEventListener('submit', e => {
         e.preventDefault();
         resetErrors();
         const isValid = validateForm();
         if(isValid) {
             console.log('Form is valid');
-            resetForm();
+            fetchData();
+            //resetForm();
         } else {
             console.log('Form is invalid')
         }
@@ -29,20 +36,11 @@
         const scndOfferArr = ["SO", "BuSO", "DBSO"];
         const frstOfferArr = ["BA", "BuO","KO","LO"];
 
-        const scndMethodArr = [""];
-        const frstMethodArr = ["Freinet","Jenaplan","EG","Dalton","Leefschool","Montessori"];
-
         if(type.value === "Secondary") {
             scndOfferArr.forEach((el) => {
                 document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
             })
             frstOfferArr.forEach((el) => {
-                document.querySelector(`option[value="${el}"]`).setAttribute("disabled", "");
-            })/*
-            scndMethodArr.forEach((el) => {
-                document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
-            })*/
-            frstMethodArr.forEach((el) => {
                 document.querySelector(`option[value="${el}"]`).setAttribute("disabled", "");
             })
         }
@@ -52,24 +50,13 @@
             })
             frstOfferArr.forEach((el) => {
                 document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
-            })/*
-            scndMethodArr.forEach((el) => {
-                document.querySelector(`option[value="${el}"]`).setAttribute("disabled", "");
-            })*/
-            frstMethodArr.forEach((el) => {
-                document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
             })
-        } else if(type.value === "all") {
+        } 
+        if(type.value === "any") {
             scndOfferArr.forEach((el) => {
                 document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
             })
             frstOfferArr.forEach((el) => {
-                document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
-            })/*
-            scndMethodArr.forEach((el) => {
-                document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
-            })*/
-            frstMethodArr.forEach((el) => {
                 document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
             })
         }
@@ -113,5 +100,57 @@
         method.value = 0;
         type.value = 0;
         
+    }
+
+    const displayData = () => {
+        let data;
+        if(type.value === "Primary") {
+            data = globalDataBasis.records.filter(el =>(
+                (offer.value === "any" ? true : el.fields.aanbod === offer.value) &&
+                    (method.value === "any" ? true : el.fields.onderwijsnet === method.value) &&
+                    (location.value === "any" ? true : el.fields.gemeente === location.value)
+            ))
+        }
+        if(type.value === "Secondary") {
+            data = globalDataSec.records.filter(el =>(
+                (offer.value === "any" ? true : el.fields.aanbod === offer.value) &&
+                    (method.value === "any" ? true : el.fields.onderwijsnet === method.value) &&
+                    (location.value === "any" ? true : el.fields.gemeente === location.value)
+            ))
+        }
+        if(type.value === "any") {
+            let dataBasisTemp = globalDataBasis.records.filter(el =>(
+                (offer.value === "any" ? true : el.fields.aanbod === offer.value) &&
+                    (method.value === "any" ? true : el.fields.onderwijsnet === method.value) &&
+                    (location.value === "any" ? true : el.fields.gemeente === location.value)
+            ))
+            let dataSecTemp = globalDataSec.records.filter(el =>(
+                (offer.value === "any" ? true : el.fields.aanbod === offer.value) &&
+                    (method.value === "any" ? true : el.fields.onderwijsnet === method.value) &&
+                    (location.value === "any" ? true : el.fields.gemeente === location.value)
+            ))
+            data = dataBasisTemp.concat(dataSecTemp);
+        }
+        if(search.value !== "") {
+            data = data.filter(el => (
+                el.fields.naam.search(search.value) !== -1
+            ))
+        }
+        console.log(data);
+    }
+    const fetchData = async () => {
+        try {
+            let responseBasis = await fetch(linkBasisScholen);
+            if(!responseBasis.ok) throw Error();
+            globalDataBasis = await responseBasis.json();
+            let responseSec = await fetch(linkSecundaireScholen);
+            if (!responseSec.ok) throw Error();
+            globalDataSec = await responseSec.json();
+            displayData();
+        }
+        catch (err) {
+            console.log(err)
+        }
+
     }
 })();

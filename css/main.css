@@ -30,61 +30,76 @@ header {
 }
 h1 {
     color: var(--background);
-
+}
+h2 {
+    text-align: center;
 }
 main {
     display: flex;
     flex-direction: column;
     margin: 2rem auto;
 }
-
 form {
     display: flex;
     flex-direction: column;
-    width: min(80%,25rem);
-    margin: 1rem auto;
     align-items: center;
+    margin: 3rem auto;
+    width: 90%;
+    justify-content: center;
 }
 form div {
     display: flex;
-    margin: 1rem 0;
+    flex-direction: column;
     overflow: hidden;
     padding: 0.6rem;
     justify-content: space-between;
-    width: 100%;
+    width: 90%;
+    gap: 1em;
+    margin-bottom: 1rem;
+    align-items: center;
 }
-
-
-h2 {
-    text-align: center;
+fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border: none;
+    margin-bottom: 3rem;padding: 0;
+}
+legend {
+    font-weight: 800;
+    position: relative;
+    left: 2rem;
 }
 
 label {
     border: 2px solid var(--text);
-    display: flex;
     border-radius: var(--borderRad);
-    padding: 1em;
-    width: 20%;
-    justify-content: center;
     box-shadow: var(--boxShad);
-}
+    display: flex;
+    justify-content: center;
+    padding: 0.5em 0;
+    width: 80%;
+    font-weight: 600;
 
+}
 select {
+    background: url('https://api.iconify.design/bx/chevron-down.svg?height=28') 96% / 15% no-repeat;
+    padding: 5px 35px 5px 5px;
+}
+select, input {
     border: solid 2px var(--text);
-    padding: 1em;
-    width: 60%;
+    background-color: #b4b3b3;
     border-radius: var(--borderRad);
     box-shadow: var(--boxShad);
     text-align: center;
-
-    padding: 5px 35px 5px 5px;
     font-size: 18px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: url('https://api.iconify.design/bx/chevron-down.svg?height=28') 96% / 15% no-repeat #eee;
+    width: 80%; 
+    height: 2rem;
 }
-
 
 button {
     background-color: var(--prim);
@@ -107,4 +122,40 @@ button {
 option:disabled {
     display: none;
 }
-  
+label> abbr.optional {
+    color: #888;
+    font-weight: normal;
+    text-decoration: none;
+    cursor: pointer;
+}
+label>abbr.required, legend>abbr.required {
+    color: red;
+    text-decoration: none;
+} 
+
+@media (min-width: 500px){
+    form {
+        width: min(80%,28rem);
+        margin: 1rem auto;
+    }
+    form div {
+        flex-direction: row;
+        margin: 1rem 0;
+        width: 100%;
+    }
+    select, input {
+        width: 60%;
+        margin: 0 1rem;
+    }
+    select {
+        height: 100%;
+    }
+    label {
+        padding: 1em;
+        width: 25%;
+    }
+    input {
+        height: 90%;
+    }
+    
+}
