@@ -19,12 +19,18 @@
     const errOffer = document.querySelector("#offerErr");
     const errMethod = document.querySelector("#methodErr");
 
+    const searchArea = document.querySelector(".searchArea")
+    const resultList = document.querySelector(".results");
+    const resultBtn = document.querySelector("#newSearchFilter");
+
     form.addEventListener('submit', e => {
         e.preventDefault();
         resetErrors();
         const isValid = validateForm();
         if(isValid) {
             console.log('Form is valid');
+            searchArea.classList.toggle('hidden');
+            resultList.classList.toggle('hidden');
             fetchData();
             //resetForm();
         } else {
@@ -62,6 +68,14 @@
         }
         offer.value = 0;
         method.value = 0;
+    });
+
+    resultBtn.addEventListener('click', () => {
+        searchArea.classList.toggle('hidden');
+        resultList.classList.toggle('hidden');
+        document.querySelectorAll(".result").forEach((el) => {
+            document.querySelector(".results").removeChild(el)
+        });
     });
 
     const validateForm = ()=> {
@@ -137,7 +151,50 @@
             ))
         }
         console.log(data);
+
+        data.forEach((el) => {
+            const result = document.createElement("div");
+            const header = document.createElement("h2");
+            const headerText = document.createTextNode(`${el.fields.naam}`)
+            const tags = document.createElement("div");
+            const offerTag = document.createElement("span");
+            const offerTagText = document.createTextNode(`${el.fields.aanbod}`);
+            const netTag = document.createElement("span");
+            const netTagText = document.createTextNode(`${el.fields.onderwijsnet}`);
+            const para = document.createElement("p");
+            const paraText = document.createTextNode("Deze school is heel mooi en heel goed")
+            const ratingDiv = document.createElement("div");
+            const ratingSpan = document.createElement("span");
+            const ratingSpanText = document.createTextNode("Score: * * * * *");
+
+            tags.appendChild(offerTag);
+            tags.appendChild(netTag);
+            offerTag.appendChild(offerTagText)
+            netTag.appendChild(netTagText)
+            para.appendChild(paraText);
+            ratingDiv.appendChild(ratingSpan);
+            ratingSpan.appendChild(ratingSpanText);
+            result.appendChild(header);
+            header.appendChild(headerText);
+            result.appendChild(tags);
+            result.appendChild(para);
+            result.appendChild(ratingDiv);
+            resultList.appendChild(result);
+            result.className = "result";
+            tags.className = "tags";
+            offerTag.className = "tag offerTag";
+            netTag.className = "tag netTag";
+            para.className = "description";
+            ratingDiv.className = "rating";
+
+
+        })
+        /*
+        document.querySelectorAll(".results div").forEach((el)=>{
+            el.classList.add="result"
+        });*/
     }
+
     const fetchData = async () => {
         try {
             let responseBasis = await fetch(linkBasisScholen);
