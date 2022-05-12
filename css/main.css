@@ -65,7 +65,8 @@ fieldset {
     align-items: center;
     width: 100%;
     border: none;
-    margin-bottom: 3rem;padding: 0;
+    margin-top: 1rem;
+    padding: 0;
 }
 legend {
     font-weight: 800;
@@ -115,6 +116,7 @@ button {
     font-weight: bold;
     width: 55%;
     cursor: pointer;
+    margin-top: 1rem;
 }
 #locationErr, #typeErr, #methodErr, #offerErr {
     display: none;
@@ -223,7 +225,6 @@ h3::before {
     }
     form div {
         flex-direction: row;
-        margin: 1rem 0;
         width: 100%;
     }
     select, input {
