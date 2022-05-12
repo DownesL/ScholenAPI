@@ -3,7 +3,7 @@
     --text: #222;
     --borderRad: 40px;
     --boxShad: 0 4px 4px #22222260;
-    --background: #f4f4f4;
+    --background: #f9f9f9;
 } 
 
 *,*::before,*::after {
@@ -17,6 +17,7 @@ html {
 }
 body {
     margin: 0;;
+    background-color: var(--background);
 }
 
 header {
@@ -75,6 +76,7 @@ legend {
 label {
     border: 3px solid #4159E0;
     border-radius: var(--borderRad);
+    background-color: #FFF;
     box-shadow: var(--boxShad);
     display: flex;
     justify-content: center;
@@ -90,6 +92,7 @@ select {
 }
 select, input {
     border: solid 3px #4159E0;
+    background-color: #FFF;
     border-radius: var(--borderRad);
     box-shadow: var(--boxShad);
     text-align: center;
@@ -185,14 +188,6 @@ label>abbr.required, legend>abbr.required {
 .rating {
     margin-top: 1rem;
 }
-
-/*
-.results .result {
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-    padding: 1.6rem;
-    border-radius: var(--borderRad);
-}*/
-  
   
 h3 {
     position: relative;

@@ -3,7 +3,7 @@
   --text: #222;
   --borderRad: 40px;
   --boxShad: 0 4px 4px #22222260;
-  --background: #f4f4f4;
+  --background: #f9f9f9;
 }
 
 *, :before, :after {
@@ -17,6 +17,7 @@ html {
 }
 
 body {
+  background-color: var(--background);
   margin: 0;
 }
 
@@ -85,6 +86,7 @@ label {
   border-radius: var(--borderRad);
   box-shadow: var(--boxShad);
   width: 80%;
+  background-color: #fff;
   border: 3px solid #4159e0;
   justify-content: center;
   padding: .5em 0;
@@ -104,6 +106,7 @@ select, input {
   text-align: center;
   appearance: none;
   width: 80%;
+  background-color: #fff;
   border: 3px solid #4159e0;
   font-size: 18px;
 }
