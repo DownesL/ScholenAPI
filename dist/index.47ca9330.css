@@ -1,9 +1,9 @@
 :root {
-  --prim: #054a05;
-  --background: #f9f9f9;
+  --prim: #4159e0;
   --text: #222;
   --borderRad: 40px;
   --boxShad: 0 4px 4px #22222260;
+  --background: #f4f4f4;
 }
 
 *, :before, :after {
@@ -82,10 +82,10 @@ legend {
 }
 
 label {
-  border: 2px solid var(--text);
   border-radius: var(--borderRad);
   box-shadow: var(--boxShad);
   width: 80%;
+  border: 3px solid #4159e0;
   justify-content: center;
   padding: .5em 0;
   font-weight: 600;
@@ -93,20 +93,23 @@ label {
 }
 
 select {
+  height: 100%;
   background: url("https://api.iconify.design/bx/chevron-down.svg?height=28") 96% / 15% no-repeat;
   padding: 5px 35px 5px 5px;
 }
 
 select, input {
-  border: solid 2px var(--text);
   border-radius: var(--borderRad);
   box-shadow: var(--boxShad);
   text-align: center;
   appearance: none;
   width: 80%;
-  height: 2rem;
-  background-color: #b4b3b3;
+  border: 3px solid #4159e0;
   font-size: 18px;
+}
+
+input {
+  height: 2rem;
 }
 
 button {
@@ -115,7 +118,6 @@ button {
   border-radius: var(--borderRad);
   width: 55%;
   cursor: pointer;
-  margin-top: 2.5rem;
   padding: 1rem;
   font-size: 1.5rem;
   font-weight: bold;
@@ -151,7 +153,6 @@ label > abbr.required, legend > abbr.required {
 }
 
 .results {
-  width: min(80%, 30rem);
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
@@ -163,23 +164,25 @@ label > abbr.required, legend > abbr.required {
 }
 
 .results .result {
-  width: 100%;
+  width: 75%;
+  background-color: #fff;
+  border-radius: 1rem;
   margin: 2rem auto;
+  padding: 1rem;
   position: relative;
+  box-shadow: 0 4px 4px #00000082;
 }
 
 .results h2 {
   text-align: left;
-  max-width: 80%;
   margin-bottom: 1rem;
 }
 
 .tags {
   gap: 3px;
   display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: relative;
+  top: -.75rem;
 }
 
 .tag {
@@ -189,15 +192,46 @@ label > abbr.required, legend > abbr.required {
 }
 
 .offerTag {
-  background-color: #0004ff;
+  border: var(--prim) 2px solid;
+  color: var(--prim);
+  font-weight: bold;
 }
 
 .netTag {
-  background-color: #ff1500;
+  color: #db0000;
+  border: 2px solid #db0000;
+  font-weight: bold;
 }
 
 .rating {
   margin-top: 1rem;
+}
+
+h3 {
+  color: #222222ad;
+  position: relative;
+  top: -.5rem;
+}
+
+h3:before {
+  content: "°";
+  color: #696969;
+}
+
+.tagLegende {
+  align-items: center;
+  display: flex;
+}
+
+.tagLegende ul {
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  display: flex;
+}
+
+.tagLegende h2 {
+  margin-bottom: 0;
 }
 
 @media (min-width: 500px) {
@@ -228,6 +262,16 @@ label > abbr.required, legend > abbr.required {
 
   input {
     height: 90%;
+  }
+
+  .tags {
+    position: absolute;
+    top: 1rem;
+    right: .5rem;
+  }
+
+  .results h2 {
+    max-width: 80%;
   }
 }
 

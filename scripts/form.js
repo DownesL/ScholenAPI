@@ -156,6 +156,8 @@
             const result = document.createElement("div");
             const header = document.createElement("h2");
             const headerText = document.createTextNode(`${el.fields.naam}`)
+            const locationHeader = document.createElement('h3');
+            const locationHeaderText = document.createTextNode(`${el.fields.gemeente}`);
             const tags = document.createElement("div");
             const offerTag = document.createElement("span");
             const offerTagText = document.createTextNode(`${el.fields.aanbod}`);
@@ -177,6 +179,8 @@
             result.appendChild(header);
             header.appendChild(headerText);
             result.appendChild(tags);
+            result.appendChild(locationHeader);
+            locationHeader.appendChild(locationHeaderText);
             result.appendChild(para);
             result.appendChild(ratingDiv);
             resultList.appendChild(result);

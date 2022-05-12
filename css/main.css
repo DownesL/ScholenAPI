@@ -1,10 +1,10 @@
 :root {
-    --prim: #054a05;
-    --background: #F9F9F9;
+    --prim: #4159E0;
     --text: #222;
     --borderRad: 40px;
     --boxShad: 0 4px 4px #22222260;
-}
+    --background: #f4f4f4;
+} 
 
 *,*::before,*::after {
     margin: 0;
@@ -73,7 +73,7 @@ legend {
 }
 
 label {
-    border: 2px solid var(--text);
+    border: 3px solid #4159E0;
     border-radius: var(--borderRad);
     box-shadow: var(--boxShad);
     display: flex;
@@ -86,10 +86,10 @@ label {
 select {
     background: url('https://api.iconify.design/bx/chevron-down.svg?height=28') 96% / 15% no-repeat;
     padding: 5px 35px 5px 5px;
+    height: 100%;
 }
 select, input {
-    border: solid 2px var(--text);
-    background-color: #b4b3b3;
+    border: solid 3px #4159E0;
     border-radius: var(--borderRad);
     box-shadow: var(--boxShad);
     text-align: center;
@@ -98,6 +98,8 @@ select, input {
     -moz-appearance: none;
     appearance: none;
     width: 80%; 
+}
+input {
     height: 2rem;
 }
 
@@ -107,7 +109,6 @@ button {
     padding: 1rem;
     font-size: 1.5rem;
     border-radius: var(--borderRad);
-    margin-top: 2.5rem;
     font-weight: bold;
     width: 55%;
     cursor: pointer;
@@ -140,7 +141,6 @@ label>abbr.required, legend>abbr.required {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: min(80%, 30rem);
     margin: 0 auto;
 }
 .results button {
@@ -148,20 +148,22 @@ label>abbr.required, legend>abbr.required {
 }
 .results .result {
     margin: 2rem auto;
-    width: 100%;
     position: relative;
+    width: 75%;
+    box-shadow: 0 4px 4px 0 #00000082;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: #FFF;
 }
 .results h2 {
     text-align: left;
     margin-bottom: 1rem;
-    max-width: 80%;
 }
 .tags {
-    position: absolute;
-    right: 0;
-    top: 0;
     display: flex;
     gap: 3px;
+    position: relative;
+    top:-0.75rem
 }
 .tag {
     padding: 5px 10px;
@@ -169,14 +171,55 @@ label>abbr.required, legend>abbr.required {
     color: var(--background);
 }
 .offerTag {
-    background-color: #0004ff;
+    border: var(--prim) 2px solid;
+    color: var(--prim);
+    font-weight: bold;
 }
 .netTag {
-    background-color: #ff1500;
-}
+    border: #db0000 2px solid;
+    color: #db0000;
+    font-weight: bold;
+  }
+  
+
 .rating {
     margin-top: 1rem;
 }
+
+/*
+.results .result {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 1.6rem;
+    border-radius: var(--borderRad);
+}*/
+  
+  
+h3 {
+    position: relative;
+    top: -0.5rem;
+    color: #222222ad;
+}
+  
+h3::before {
+    content: "°";
+    color: dimgray;
+}
+
+.tagLegende {
+    display: flex;
+    align-items: center;
+}
+.tagLegende ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 1rem;
+}
+.tagLegende h2 {
+  margin-bottom: 0;
+}
+
+  
 
 @media (min-width: 500px){
     form {
@@ -201,6 +244,14 @@ label>abbr.required, legend>abbr.required {
     }
     input {
         height: 90%;
+    }
+    .tags {
+        position: absolute;
+        right: 0.5rem;
+        top: 1rem;
+    }
+    .results h2 {
+        max-width: 80%;
     }
     
 }
