@@ -154,6 +154,7 @@ label>abbr.required, legend>abbr.required {
 .results h2 {
     text-align: left;
     margin-bottom: 1rem;
+    max-width: 80%;
 }
 .tags {
     position: absolute;

@@ -72,7 +72,7 @@
         searchArea.classList.toggle('hidden');
         resultList.classList.toggle('hidden');
         document.querySelectorAll(".result").forEach((el)=>{
-            document.querySelector(".results").removeChild(el);
+            resultList.removeChild(el);
         });
     });
     const validateForm = ()=>{
@@ -161,10 +161,7 @@
             para.className = "description";
             ratingDiv.className = "rating";
         });
-    /*
-        document.querySelectorAll(".results div").forEach((el)=>{
-            el.classList.add="result"
-        });*/ };
+    };
     const fetchData = async ()=>{
         try {
             let responseBasis = await fetch(linkBasisScholen);

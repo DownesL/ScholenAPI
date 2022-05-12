@@ -170,6 +170,7 @@ label > abbr.required, legend > abbr.required {
 
 .results h2 {
   text-align: left;
+  max-width: 80%;
   margin-bottom: 1rem;
 }
 
