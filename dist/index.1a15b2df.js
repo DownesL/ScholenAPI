@@ -81,7 +81,7 @@
         document.querySelector(".aanbodLegende").classList.toggle("hidden");
     });
     netTags.addEventListener('click', ()=>{
-        document.querySelector(".aanbodLegende").classList.toggle("hidden");
+        document.querySelector(".netLegende").classList.toggle("hidden");
     });
     const validateForm = ()=>{
         let isValid = true;
