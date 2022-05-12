@@ -35,7 +35,7 @@
             //resetForm();
         } else {
             console.log('Form is invalid')
-        }
+        } 
     })
 
     type.addEventListener('focusout',()=> {
