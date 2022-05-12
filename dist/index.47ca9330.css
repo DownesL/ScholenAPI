@@ -127,6 +127,13 @@ button {
   font-weight: bold;
 }
 
+button.tag.offerTag, button.tag.netTag {
+  font-size: unset;
+  width: unset;
+  background-color: #fff0;
+  margin: 0;
+}
+
 #locationErr, #typeErr, #methodErr, #offerErr {
   color: red;
   margin: -1rem auto 0;
@@ -222,6 +229,10 @@ h3:before {
   color: #696969;
 }
 
+.legends {
+  display: flex;
+}
+
 .tagLegende {
   align-items: center;
   display: flex;
@@ -236,6 +247,44 @@ h3:before {
 
 .tagLegende h2 {
   margin-bottom: 0;
+}
+
+.tagLegende .tag {
+  text-decoration: underline;
+}
+
+.aanbodLegende, .netLegende {
+  width: 50%;
+  background-color: #fff;
+  border-radius: 1rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0 4px 4px #00000082;
+}
+
+.aanbodLegende ul, .netLegende ul {
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.aanbodLegende ul span, .netLegende ul span {
+  width: 15%;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+  display: flex;
+}
+
+.aanbodLegende ul li, .netLegende ul li {
+  width: 100%;
+  align-items: center;
+  margin-top: 1rem;
+  display: flex;
 }
 
 @media (min-width: 500px) {

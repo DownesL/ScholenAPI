@@ -23,6 +23,9 @@
     const resultList = document.querySelector(".results");
     const resultBtn = document.querySelector("#newSearchFilter");
 
+    const tagOffers = document.querySelector(".tagLegende .tag.offerTag");
+    const netTags = document.querySelector(".tagLegende .tag.netTag");
+
     form.addEventListener('submit', e => {
         e.preventDefault();
         resetErrors();
@@ -77,6 +80,12 @@
             resultList.removeChild(el)
         });
     });
+    tagOffers.addEventListener('click', () => {
+        document.querySelector(".aanbodLegende").classList.toggle("hidden");
+    });
+    netTags.addEventListener('click',() => {
+        document.querySelector(".aanbodLegende").classList.toggle("hidden");
+    })
 
     const validateForm = ()=> {
         let isValid = true;
