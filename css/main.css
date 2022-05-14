@@ -10,7 +10,6 @@
     margin: 0;
     color: var(--text);
 }
-
 html {
     box-sizing: border-box;
     font-family: Radio Canada, sans-serif;
@@ -19,7 +18,6 @@ body {
     margin: 0;;
     background-color: var(--background);
 }
-
 header {
     background-color: var(--prim);
     display: flex;
@@ -34,11 +32,31 @@ h1 {
 }
 h2 {
     text-align: center;
+    margin-bottom: 3rem;
 }
+.explenation h3 {
+    margin: 3rem auto 1rem;
+} 
 main {
     display: flex;
     flex-direction: column;
     margin: 2rem auto;
+}
+.explenation {
+    padding: 2rem;
+    margin: auto;
+}
+.explenation p {
+    max-width: 650px;
+}
+a {
+    color: var(--prim)
+}
+.searchArea {
+    margin-top: 3rem;
+}
+.searchArea h2 {
+    margin-bottom: 2rem;
 }
 form {
     display: flex;
@@ -71,11 +89,12 @@ fieldset {
 legend {
     font-weight: 800;
     position: relative;
-    left: 2rem;
+    left: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
 }
-
-label {
-    border: 3px solid #4159E0;
+div>label {
+    border: 2px solid #4159e0;
     border-radius: var(--borderRad);
     background-color: #FFF;
     box-shadow: var(--boxShad);
@@ -84,29 +103,40 @@ label {
     padding: 0.5em 0;
     width: 80%;
     font-weight: 600;
-
+    
+}
+.checkboxes>div {
+    flex-direction: row;
+    justify-content: center;
+}
+.checkboxes>div>input {
+    height: 1.75rem;
+    width: 1.75rem;
+}
+.checkboxes>div>label {
+    border-width: 3px;
+    width: 70%;
 }
 select {
     background: url('https://api.iconify.design/bx/chevron-down.svg?height=28') 96% / 15% no-repeat;
     padding: 5px 35px 5px 5px;
     height: 100%;
 }
-select, input {
-    border: solid 3px #4159E0;
+select, input:not(input[type="checkbox"]) {
+    border: solid 4px #4159E0;
     background-color: #FFF;
     border-radius: var(--borderRad);
     box-shadow: var(--boxShad);
     text-align: center;
     font-size: 18px;
     -webkit-appearance: none;
-    -moz-appearance: none;
+    -moz-appearance: none;  
     appearance: none;
     width: 80%; 
 }
 input {
     height: 2rem;
 }
-
 button {
     background-color: var(--prim);
     color: var(--background);
@@ -123,9 +153,8 @@ button.tag.offerTag, button.tag.netTag {
     font-size: unset;
     width: unset;
     margin: 0;
-}
-  
-#locationErr, #typeErr, #methodErr, #offerErr {
+} 
+#locationErr, #typeErr, #methodErr, #offerErr, #searchErr {
     display: none;
     color: red;
     font-weight: bold;
@@ -171,6 +200,10 @@ label>abbr.required, legend>abbr.required {
     text-align: left;
     margin-bottom: 1rem;
 }
+.results .result.noResults p, .results .result.noResults h2 {
+    text-align: center;
+    margin: 1rem auto;
+}
 .tags {
     display: flex;
     gap: 3px;
@@ -192,19 +225,15 @@ label>abbr.required, legend>abbr.required {
     color: #db0000;
     font-weight: bold;
 }
- 
-
 .rating {
     margin-top: 1rem;
 }
-  
-h3 {
+.results h3 {
     position: relative;
     top: -0.5rem;
     color: #222222ad;
 }
-  
-h3::before {
+.results h3::before {
     content: "°";
     color: dimgray;
 }
@@ -260,7 +289,7 @@ h3::before {
   
 @media (min-width: 500px){
     form {
-        width: min(80%,28rem);
+        width: min(80%,40rem);
         margin: 1rem auto;
     }
     form div {
@@ -274,9 +303,10 @@ h3::before {
     select {
         height: 100%;
     }
-    label {
-        padding: 1em;
+    div > label {
+        padding: 0.75em;
         width: 25%;
+        text-align: center;
     }
     input {
         height: 90%;
@@ -286,8 +316,15 @@ h3::before {
         right: 0.5rem;
         top: 1rem;
     }
+    .results {
+        min-width: 75%;
+    }
     .results h2 {
         max-width: 80%;
+    }
+    .checkboxes {
+        width: 100%;
+        flex-direction: row;
     }
     
 }

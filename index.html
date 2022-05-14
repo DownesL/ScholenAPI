@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,74 +18,127 @@
         <h1>SchoolSearch</h1>
     </header>
     <main>
-        <div class="searchArea">
-        <h2>Stel je zoekopdracht op:</h2>
-        <form action="#">
-            <fieldset><legend>Specifieke zoekopdracht:</legend>
-                <div>
-                <label for="search">Schoolnaam<abbr class="optional" title="(optioneel)">*</abbr></label>
-                <input type="text" name="search" id="search">
-            </div>
-            </fieldset>
-            <fieldset><legend>Filter:</legend>
-                <div>
-                    <label for="location">Locatie:<abbr title="Dit is een verplicht in te vullen veld" class="required">*</abbr></label>
-                    <Select name="location" id="location" required>
-                        <option value="0">Kies optie...</option>
-                        <option value="any">Alle</option>
-                        <option value="Gent">Gent</option>
-                        <option value="Oostakker">Oostakker</option>
-                        <option value="Sint-Amandsberg">Sint-Amandsberg</option>
-                        <option value="Drongen">Drongen</option>
-                        <option value="Mariakerke">Mariakerke</option>
-                        <option value="Sint-Denijs-Westrem">Sint-Denijs-Westrem</option>
-                        <option value="Gentbrugge">Gentbrugge</option>
-                        <option value="Ledeberg">Ledeberg</option>
-                        <option value="Zwijnaarde">Zwijnaarde</option>
-                    </Select>
+        <section class="explenation">
+            <h2>Hoe vind je een school voor je kinderen?</h2>
+            <p>Het vinden van een goede school die echt bij je kinderen past is niet gemakkelijk.
+                Ook is het niet altijd gemakkelijk de juiste informatie te vinden en daarbovenop is die 
+                informatie ook niet altijd gemakkelijk te begrijpen. Met deze website proberen we een licht
+                te schijnen op de situatie.
+            </p>
+            <h3>Help! Mijn kind verjaart en moet naar een nieuwe school.</h3>
+            <p>Een eerste stap in het kiezen van een nieuwe school voor jouw kind is het bepalen van 
+                de juiste graad. Is je kind 2,5 jaar oud? Dan is de kleuterschool 
+                geschikt tot 1 september van het kalenderjaar waarin hij/zij/het 6 jaar oud wordt.
+                Dan hoort hij/zij/het het best thuis in het lager onderwijs, tot 12 jaar.
+                Hierna kan je kind naar de secundaire school.
+            </p>
+            <h3>Help! Waar moet mijn kind naar school?</h3>
+            <p>De ligging van de school is heel belangrijk. De perfecte school voor je kind is niet 
+                perfect als deze zich aan de andere kant van de wereld bevindt. Het is aan te raden een
+                school te zoeken die voldoet aan je verwachtingen, in je gemeente, of een nabijgelegen gemeente.
+            </p>
+            <h3>Help! Naar welk soort school moet mijn kind?</h3>
+            <p>Voor kinderen jonger dan 12 jaar bestaan er 3 soorten scholen. Ten eerste maken we het onderscheid
+                tussen het Kleuteronderwijs (KO) en het Lageronderwijs (LO). Een school die zowel een kleuterschool heeft,
+                als een lagere school heeft, wordt een Basisschool genoemd (BA). Ten tweede bestaan er ook
+                scholen in het Buitengewoon Onderwijs(BuSO). Deze scholen zijn vooral bestemd voor kinderen
+                die wat extra hulp kunnen gebruiken, omwille van psychologische of fysieke aandoeningen.
+                Voor meer info over Buitengewoon Onerwijs kan je terecht op de website van de 
+                <a href="https://data-onderwijs.vlaanderen.be/onderwijsaanbod/default.aspx/bao/buo">Vlaamse Overheid (info over BuO)</a>.
+            </p>
+            <p>In het Secundair Onderwijs (SO) bestaan er ook 3 grote soorte onderwijs. De eerste soort is het Gewoon Secundair
+                Onderwijs (op deze website beschouwd als SO). Binnen het Gewoon Secundair Onderwijs bestaan verschillende richtingen,
+                meer info hierover kan je vinden op de website van de
+                <a href="https://www.belgium.be/nl/Leren/onderwijs/secundair_onderwijs/onderwijsaanbod">Belgische Overheid (info over SO richtingen)</a>.
+            </p>
+            <h3>Help! Wat is een onderwijsnet?</h3>
+            <p>In Vlaanderen bestaan er grote 3 onderwijsnetten. Een onderwijsnet is een indeling van het scholensysteem op vlak van bestuur.
+                Typisch wil dit zeggen dat elke school in een net de godsdiensten geeft die bij dat net horen. Een eerste onderwijsnet is 
+                het Gemeenschapsonderwijs (GO!). Dit onderwijs is van de Vlaamse Gemeenschap. Een tweede onderwijsnet is het Gesubsidieerd 
+                Officieel Onderwijs (GSO), en wordt georganiseerd door de gemeentebesturen. Het derde grote onderwijsnet valt onder het Vrije Onderwijs.
+                Omdat het Katholieke Onderwijs (KO) hierin veruit het grootst is, beschouwen dit als een heel onderwijsnet. 
+                Meer info over onderwijsnetten is te vinden op de website van de 
+                <a href="https://onderwijs.vlaanderen.be/nl/structuur/officieel-en-vrij-onderwijs-onderwijsnetten-en-koepels">Vlaamse Overheid (info over onderwijsnetten)</a>;
+            </p>
+            <h3>Help! Wat doet deze website</h3>
+            <p>Deze website dient als hulpmiddel om de ideale school voor jouw kind te vinden. Onderaan deze pagina kan je al je vereisten invullen. 
+                Als je al een website in gedachten hebt, kan je de schoolnaam invullen, maar dit is niet verplicht. Als je niet weet wat je wil, of geen specifieke voorkeur hebt,
+                selecteer dan "Alle".
+            </p>
+            <p>Is er in deze tekst een woord gebruikt dat je niet begrijpt?
+                Misschien vind je een antwoord op <a href="https://www.onderwijskiezer.be/v2/extra/abc.php">de onderwijskiezer van het clb.</a>
+        </section>
+        <section class="searchArea">
+            <h2>Stel je zoekopdracht op:</h2>
+            <form action="#">
+                <fieldset><legend>Specifieke zoekopdracht:</legend>
+                    <div>
+                    <label for="search">Schoolnaam<abbr class="optional" title="(optioneel)">*</abbr></label>
+                    <input type="text" name="search" id="search">
+                    <div id="searchErr"></div>
                 </div>
-                <div id="locationErr"></div>
-                <div>
-                    <label for="type">Type:<abbr title="Dit is een verplicht in te vullen veld" class="required">*</abbr></label>
-                    <select name="type" id="type" required>
-                        <option value="0">Kies optie...</option>
-                        <option value="any">Alle</option>
-                        <option value="Secondary">Secundaire school</option>
-                        <option value="Primary">Lagere school</option>
-                    </select>
-                </div>
-                <div id="typeErr"></div>
-                <div>
-                    <label for="offer">Aanbod:<abbr title="Dit is een verplicht in te vullen veld" class="required">*</abbr></label>
-                    <select name="offer" id="offer" required>
-                        <option value="0">Kies optie...</option>
-                        <option value="any">Alle</option>
-                        <option value="BA" class="LO">BA</option>
-                        <option value="BuO" class="LO">BuO</option>
-                        <option value="KO" class="LO">KO</option>
-                        <option value="LO" class="LO">LO</option>
-                        <option value="SO" class="SO">SO</option>
-                        <option value="BuSO" class="SO">BUSO</option>
-                        <option value="DBSO" class="SO">DBSO</option>
-                    </select>
-                </div>
-                <div id="offerErr"></div>
-                <div>
-                    <label for="method">Onderwijsnet:<abbr title="Dit is een verplicht in te vullen veld" class="required">*</abbr></label>
-                    <select name="method" id="method" required>
-                        <option value="0">Kies optie...</option>
-                        <option value="any">Alle</option>
-                        <option value="KO">KO</option>
-                        <option value="OSG">OSG</option>
-                        <option value="GO">GO</option>
-                    </select>
-                </div>
-                <div id="methodErr"></div>
-            </fieldset>
-            <button type="submit">Zoek Scholen</button>
-        </form>
-        </div>
-        <div class="results hidden">
+                </fieldset>
+                <fieldset class="checkboxes"><legend>Graad:</legend>
+                        <div>
+                            <input type="checkbox" name="primary" id="primary">
+                            <label for="primary">Lagere school</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="secondary" id="secondary">
+                            <label for="secondary">Secundaire school</label>
+                        </div>
+                        <div id="typeErr"></div>
+                </fieldset>
+                <fieldset><legend>Filter:</legend>
+                    <div>
+                        <label for="location">Locatie:<abbr title="Dit is een verplicht in te vullen veld" class="required">*</abbr></label>
+                        <Select name="location" id="location" required>
+                            <option value="0">Kies optie...</option>
+                            <option value="any">Alle</option>
+                            <option value="Gent">Gent</option>
+                            <option value="Oostakker">Oostakker</option>
+                            <option value="Sint-Amandsberg">Sint-Amandsberg</option>
+                            <option value="Drongen">Drongen</option>
+                            <option value="Mariakerke">Mariakerke</option>
+                            <option value="Sint-Denijs-Westrem">Sint-Denijs-Westrem</option>
+                            <option value="Gentbrugge">Gentbrugge</option>
+                            <option value="Ledeberg">Ledeberg</option>
+                            <option value="Zwijnaarde">Zwijnaarde</option>
+                        </Select>
+                    </div>
+                    <div id="locationErr"></div>
+                
+                    <div>
+                        <label for="offer">Aanbod:<abbr title="Dit is een verplicht in te vullen veld" class="required">*</abbr></label>
+                        <select name="offer" id="offer" required>
+                            <option value="0">Kies optie...</option>
+                            <option value="any">Alle</option>
+                            <option value="BA" class="LO">BA</option>
+                            <option value="BuO" class="LO">BuO</option>
+                            <option value="KO" class="LO">KO</option>
+                            <option value="LO" class="LO">LO</option>
+                            <option value="SO" class="SO">SO</option>
+                            <option value="BuSO" class="SO">BUSO</option>
+                            <option value="DBSO" class="SO">DBSO</option>
+                        </select>
+                    </div>
+                    <div id="offerErr"></div>
+                    <div>
+                        <label for="method">Onderwijsnet:<abbr title="Dit is een verplicht in te vullen veld" class="required">*</abbr></label>
+                        <select name="method" id="method" required>
+                            <option value="0">Kies optie...</option>
+                            <option value="any">Alle</option>
+                            <option value="KO">KO</option>
+                            <option value="OSG">OSG</option>
+                            <option value="GO">GO</option>
+                        </select>
+                    </div>
+                    <div id="methodErr"></div>
+                </fieldset>
+                <button type="submit">Zoek Scholen</button>
+            </form>
+        </section>
+        <section class="results hidden">
             <button id="newSearchFilter">Nieuwe Zoekfilter</button>
             <div class="tagLegende">
                 <h2>Tags:</h2>
@@ -108,11 +161,11 @@
             <div class="netLegende hidden">
                 <ul>
                     <li><span class="tag netTag">GO</span>Gemeenschapsonderwijs</li>
-                    <li><span class="tag netTag">BuO</span>Gesubsidieerd officieel onderwijs</li>
+                    <li><span class="tag netTag">BuO</span>Gesubsidieerd Officieel Onderwijs</li>
                     <li><span class="tag netTag">KO</span>Katholiek Onderwijs</li>
                 </ul>
             </div>
-        </div>
+        </section>
     </main>    
 </body>
 </html>
