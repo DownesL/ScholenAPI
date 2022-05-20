@@ -49,7 +49,7 @@
         searchArea.classList.toggle('hidden');
         resultList.classList.toggle('hidden');
         document.querySelectorAll(".result").forEach((el) => {
-            resultList.removeChild(el)
+            resultList2.removeChild(el)
         });
     });
     tagOffers.addEventListener('click', () => {
@@ -120,7 +120,7 @@
         const paraText = document.createTextNode("Deze school heeft nog geen reviews")
         //WEBSITE
         const web = document.createElement("a")
-        const webLink = `${el.fields.website}`;
+        const webLink = `www.${el.fields.website}`;
         const webText = document.createTextNode("Website: " + el.fields.naam);
         //RATING
         const ratingDiv = document.createElement("div");
@@ -282,7 +282,8 @@
     let scrollCount = 1;
 
     function moooooooreData(scrollPos) {
-        if (scrollPos >= scrollCount*1600 + (scrollCount-1)*200 + 1500) {
+        console.log(lastKnownScrollPosition)
+        if (scrollPos >= scrollCount*1000) {
             fetchData2();
             displaySet++;
             scrollCount++;
@@ -300,8 +301,4 @@
             ticking = true;
         }
     });
-
-
-
-
 })();

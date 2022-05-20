@@ -5,7 +5,7 @@ const router = express.Router();
 
 router
     .route('/')
-    .get(mainController.getAllTours)
-    .post(TourController);
-    
+    .get(mainController.getReviews)
+    .post(mainController.postReview);
+
 module.exports = router;

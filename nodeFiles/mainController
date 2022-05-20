@@ -1,14 +1,47 @@
 const fs = require('fs');
-const data = JSON.parse(
-    "data,data,data,data"
-);
+const mysql = require('mysql');
 
-exports.getAll = (req,res) => {
-    res.status(200).json({
+const connection = mysql.createConnection({
+    host: 'lukasDow',
+    user: 'lukasDow',
+    password: 'Xboj878~01e51tz(',
+    database: 'schoolSearchReview'
+});
+
+
+exports.getReviews = (req,res) => {
+    connection.connect();
+    connection.query('SELECT schoolnr, (totalScore/reviewAmount) AS avgScore, description FROM reviews',function(err,result) {
+        if(err)throw err;
+        res.status(200).json({
         status: 'success',
         requestedAt: req.requestTime,
-        results: data.length,
-        data: data
+        results: result.length,
+        data: result
     })
+    });
+    connection.end();
+    
+}
+exports.postReview = (req,res) => {
+    connection.connect();
+    let schoolData;
+    connection.query(`SELECT * FROM reviews WHERE schoolnr = ${req.schoolnr}`,function(err,result) {
+        if(err) throw err;
+        schoolData = result;
+    });
+    if (schoolData.length === 0) {
+        connection.query(`INSERT INTO reviews VALUES ${req.schoolnr},1,${req.score},null`, function(err, result) {
+            if (err) throw err;
+            res.status(201).json({status: "success",data: req.body});
+        });
+    } else {
+        connection.query(`UPDATE reviews SET reviewAmount = ${schoolData.reviewAmount += 1},totalScore=${schoolData.totalScore += req.score}, null`,function(err, result) {
+            if (err) throw err;
+            res.status(201).json({status: "success",data: req.body});
+        });
+    }
+    connection.end();
+    
 }
 module.exports = mainController;

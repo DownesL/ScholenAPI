@@ -4317,3 +4317,6 @@ dist/index.47ca9330.css
 dist/index.47ca9330.css.map
 dist/index.html
 dist/css/main.css
+nodeFiles/mainController
+nodeFiles/mainRoutes
+nodeFiles/server.js
