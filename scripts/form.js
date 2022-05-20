@@ -17,6 +17,7 @@
 
     const searchArea = document.querySelector(".searchArea")
     const resultList = document.querySelector(".results");
+    const resultList2 = document.querySelector("#results");
     const resultBtn = document.querySelector("#newSearchFilter");
 
     const tagOffers = document.querySelector(".tagLegende .tag.offerTag");
@@ -116,7 +117,7 @@
         const netTagText = document.createTextNode(`${el.fields.onderwijsnet}`);
         //DESCRIPTION
         const para = document.createElement("p");
-        const paraText = document.createTextNode("Deze school is heel mooi en heel goed")
+        const paraText = document.createTextNode("Deze school heeft nog geen reviews")
         //WEBSITE
         const web = document.createElement("a")
         const webLink = `${el.fields.website}`;
@@ -125,6 +126,11 @@
         const ratingDiv = document.createElement("div");
         const ratingSpan = document.createElement("span");
         const ratingSpanText = document.createTextNode("Score: * * * * *");
+        //EIGEN REVIEW/OMSCHRIJVING TOEVOEGEN
+        const ownReview = document.createElement("p");
+        const ownReviewText = document.createTextNode("Schrijf een eigen review.");
+
+
 
         //HEADER
         header.appendChild(headerText);
@@ -143,6 +149,8 @@
         //RATING
         ratingDiv.appendChild(ratingSpan);
         ratingSpan.appendChild(ratingSpanText);
+        //REVIEW
+        ownReview.appendChild(ownReviewText);
         //SECTION
         result.appendChild(header);
         result.appendChild(tags);
@@ -150,7 +158,8 @@
         result.appendChild(para);
         result.appendChild(web);
         result.appendChild(ratingDiv);
-        resultList.appendChild(result);
+        result.appendChild(ownReview);
+        resultList2.appendChild(result);
 
         //ADD CLASSNAMES
         result.className = "result";
@@ -159,6 +168,7 @@
         netTag.className = "tag netTag";
         para.className = "description";
         ratingDiv.className = "rating";
+        ownReview.className = "leaveAReview";
     }
     //CHANGING THE POSSIBLE OPTION ACCORDING TO PRIMARY/SECONDARY SCHOOL
     const setSelectOptions = () => {
@@ -210,7 +220,7 @@
         //SECTION
         result.appendChild(header);
         result.appendChild(para);
-        resultList.appendChild(result);
+        resultList2.appendChild(result);
 
         //ADD CLASSNAMES
         result.className = "result noResults";

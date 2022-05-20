@@ -10,12 +10,22 @@
     "type": "git",
     "url": "git+https://github.com/DownieTown/ScholenAPI.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DownieTown/ScholenAPI/issues"
   },
   "homepage": "https://github.com/DownieTown/ScholenAPI#readme",
+  "dependencies": {
+    "core-js": "^3.22.5",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "lodash-es": "^4.17.21",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "regenerator-runtime": "^0.13.9"
+  },
   "devDependencies": {
     "parcel": "^2.5.0"
   }

@@ -1,0 +1,14 @@
+const fs = require('fs');
+const data = JSON.parse(
+    "data,data,data,data"
+);
+
+exports.getAll = (req,res) => {
+    res.status(200).json({
+        status: 'success',
+        requestedAt: req.requestTime,
+        results: data.length,
+        data: data
+    })
+}
+module.exports = mainController;

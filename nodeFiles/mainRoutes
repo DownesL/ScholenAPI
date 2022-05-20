@@ -1,0 +1,11 @@
+const express = require('express');
+const mainController = require('./../nodeFiles/mainController');
+
+const router = express.Router();
+
+router
+    .route('/')
+    .get(mainController.getAllTours)
+    .post(TourController);
+    
+module.exports = router;

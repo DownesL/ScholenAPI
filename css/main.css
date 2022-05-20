@@ -184,6 +184,10 @@ label>abbr.required, legend>abbr.required {
     align-items: center;
     margin: 0 auto;
 }
+.results h2 {
+    text-align: left;
+    margin-bottom: 1rem;
+}
 .results button {
     margin: 1rem auto 2rem;
 }
@@ -195,10 +199,11 @@ label>abbr.required, legend>abbr.required {
     border-radius: 1rem;
     padding: 1rem;
     background-color: #FFF;
+    transition: 0.3s ease-in-out;
 }
-.results h2 {
-    text-align: left;
-    margin-bottom: 1rem;
+.results .result:hover {
+    transform: scale(1.1);
+    transition: 0.3s ease-in-out;
 }
 .results .result.noResults p, .results .result.noResults h2 {
     text-align: center;
@@ -208,12 +213,14 @@ label>abbr.required, legend>abbr.required {
     display: flex;
     gap: 3px;
     position: relative;
-    top:-0.75rem
+    top:-0.75rem;
 }
 .tag {
+    display: flex;
     padding: 5px 10px;
     border-radius: var(--borderRad);
     color: var(--background);
+    justify-content: center;
 }
 .offerTag {
     border: var(--prim) 2px solid;
@@ -256,7 +263,7 @@ label>abbr.required, legend>abbr.required {
 .tagLegende .tag {
     text-decoration: underline;
 }
-.aanbodLegende,.netLegende {
+.aanbodLegende, .netLegende {
     margin: 2rem auto;
     position: relative;
     width: 50%;
@@ -286,7 +293,15 @@ label>abbr.required, legend>abbr.required {
     width: 100%;
     align-items: center;
 }
-  
+.leaveAReview {
+    display: none;
+    color: var(--prim);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.result:hover > .leaveAReview {
+    display: block;
+}
 @media (min-width: 500px){
     form {
         width: min(80%,40rem);
@@ -313,12 +328,11 @@ label>abbr.required, legend>abbr.required {
     }
     .tags {
         position: absolute;
-        right: 0.5rem;
+        right: 1rem;
         top: 1rem;
+        flex-direction: column;
     }
-    .results {
-        min-width: 75%;
-    }
+      
     .results h2 {
         max-width: 80%;
     }
@@ -326,5 +340,15 @@ label>abbr.required, legend>abbr.required {
         width: 100%;
         flex-direction: row;
     }
-    
+}
+@media (min-width: 700px) {
+    #results {
+        width: 85%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .results .result {
+        max-width: 40%;
+    } 
 }
