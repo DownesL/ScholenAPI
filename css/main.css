@@ -174,10 +174,6 @@ label>abbr.required, legend>abbr.required {
     color: red;
     text-decoration: none;
 } 
-.hidden {
-    display: none !important;
-    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.8s;
-}
 .results {
     display: flex;
     flex-direction: column;

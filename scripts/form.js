@@ -53,8 +53,14 @@
         });
     });
     tagOffers.addEventListener('click', () => {
-        document.querySelector(".aanbodLegende").classList.toggle("hidden");
-        document.querySelector(".netLegende").classList.add("hidden");
+        if(tagOffers.getAttribute("aria-expanded")) {
+            document.querySelector(".aanbodLegende").toggleAttribute("aria-hidden",true);
+            tagOffers.toggleAttribute("aria-expanded", "true");
+        } else {
+            document.querySelector(".aanbodLegende").toggleAttribute("aria-hidden",false);
+            tagOffers.toggleAttribute("aria-expanded", "false");
+
+        }
     });
     netTags.addEventListener('click',() => {
         document.querySelector(".netLegende").classList.toggle("hidden");
@@ -100,6 +106,18 @@
         secondary.checked = false;
         
     }
+    //FETCH REVIEW FROM DB
+    const fetchReview = async (schoolId) => {
+        let reviewContent;
+        try {
+            let review = await fetch("https://schoolsearchserver.lukasdownes.ikdoeict.be/reviews");
+            if(!review.ok) throw Error();
+            reviewContent = await responseBasis.json();
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
     //DISPLAYING ALL THE FETCHED DATA
     const createHtml = (el) => {
         const result = document.createElement("section");
@@ -130,7 +148,7 @@
         const ownReview = document.createElement("p");
         const ownReviewText = document.createTextNode("Schrijf een eigen review.");
 
-
+        fetchReview(el.fields.schoolnr);
 
         //HEADER
         header.appendChild(headerText);
