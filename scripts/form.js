@@ -55,16 +55,25 @@
     tagOffers.addEventListener('click', () => {
         if(tagOffers.getAttribute("aria-expanded")) {
             document.querySelector(".aanbodLegende").toggleAttribute("aria-hidden",true);
-            tagOffers.toggleAttribute("aria-expanded", "true");
+            tagOffers.toggleAttribute("aria-expanded", "false");
         } else {
             document.querySelector(".aanbodLegende").toggleAttribute("aria-hidden",false);
-            tagOffers.toggleAttribute("aria-expanded", "false");
-
+            tagOffers.toggleAttribute("aria-expanded", "true");
         }
+        document.querySelector(".netLegende").toggleAttribute("aria-hidden", true)
+        netTags.toggleAttribute("aria-expanded", "false");
+        
     });
     netTags.addEventListener('click',() => {
-        document.querySelector(".netLegende").classList.toggle("hidden");
-        document.querySelector(".aanbodLegende").classList.add("hidden");
+        if(netTags.getAttribute("aria-expanded")) {
+            document.querySelector(".netLegende").toggleAttribute("aria-hidden", true);
+            netTags.toggleAttribute("aria-expanded", "false");
+        } else {
+            document.querySelector(".netLegende").toggleAttribute("aria-hidden",false);
+            netTags.toggleAttribute("aria-expanded", "true");
+        }
+        document.querySelector(".aanbodLegende").toggleAttribute("aria-hidden", true)
+        tagOffers.toggleAttribute("aria-expanded", "false");
     })
 
     //FORM VALIDATION
