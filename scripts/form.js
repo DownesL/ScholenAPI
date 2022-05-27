@@ -1,6 +1,6 @@
 "use strict";
 
-(function() {
+(function () {
     const search = document.querySelector("#search");
 
     const location = document.querySelector("#location");
@@ -23,25 +23,34 @@
     const tagOffers = document.querySelector(".tagLegende .tag.offerTag");
     const netTags = document.querySelector(".tagLegende .tag.netTag");
 
-    form.addEventListener('submit', e => {
+
+
+    let displaySet = 0;
+    let globalDataBasis2, globalDataSec2, reviewContent;
+    let scrollsearch = false;
+
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         resetErrors();
         const isValid = validateForm();
-        if(isValid) {
+        if (isValid) {
             console.log('Form is valid');
             searchArea.classList.toggle('hidden');
             resultList.classList.toggle('hidden');
-            fetchData2();
+            await fetchReview();
+            await fetchData2();
+            displaySet++;
             //resetForm();
         } else {
             console.log('Form is invalid')
-        } 
+        }
+        scrollsearch = true;
     })
-    
-    primary.addEventListener('click', ()=>{
+
+    primary.addEventListener('click', () => {
         setSelectOptions()
     });
-    secondary.addEventListener('click', ()=>{
+    secondary.addEventListener('click', () => {
         setSelectOptions()
     });
 
@@ -51,48 +60,50 @@
         document.querySelectorAll(".result").forEach((el) => {
             resultList2.removeChild(el)
         });
+        scrollsearch = false;
     });
     tagOffers.addEventListener('click', () => {
-        if(tagOffers.getAttribute("aria-expanded")) {
-            document.querySelector(".aanbodLegende").toggleAttribute("aria-hidden",true);
-            tagOffers.toggleAttribute("aria-expanded", "false");
+        if (tagOffers.getAttribute("aria-expanded") === "true") {
+            document.querySelector(".aanbodLegende").setAttribute("aria-hidden", true);
+            tagOffers.setAttribute("aria-expanded", "false");
         } else {
-            document.querySelector(".aanbodLegende").toggleAttribute("aria-hidden",false);
-            tagOffers.toggleAttribute("aria-expanded", "true");
+            document.querySelector(".aanbodLegende").setAttribute("aria-hidden", false);
+            tagOffers.setAttribute("aria-expanded", "true");
         }
-        document.querySelector(".netLegende").toggleAttribute("aria-hidden", true)
-        netTags.toggleAttribute("aria-expanded", "false");
-        
+        document.querySelector(".netLegende").setAttribute("aria-hidden", true)
+        netTags.setAttribute("aria-expanded", "false");
+
     });
-    netTags.addEventListener('click',() => {
-        if(netTags.getAttribute("aria-expanded")) {
-            document.querySelector(".netLegende").toggleAttribute("aria-hidden", true);
-            netTags.toggleAttribute("aria-expanded", "false");
+    netTags.addEventListener('click', () => {
+        if (netTags.getAttribute("aria-expanded") === "true") {
+            document.querySelector(".netLegende").setAttribute("aria-hidden", true);
+            netTags.setAttribute("aria-expanded", "false");
         } else {
-            document.querySelector(".netLegende").toggleAttribute("aria-hidden",false);
-            netTags.toggleAttribute("aria-expanded", "true");
+            document.querySelector(".netLegende").setAttribute("aria-hidden", false);
+            netTags.setAttribute("aria-expanded", "true");
         }
-        document.querySelector(".aanbodLegende").toggleAttribute("aria-hidden", true)
-        tagOffers.toggleAttribute("aria-expanded", "false");
+        document.querySelector(".aanbodLegende").setAttribute("aria-hidden", true)
+        tagOffers.setAttribute("aria-expanded", "false");
     })
 
+
     //FORM VALIDATION
-    const validateForm = ()=> {
+    const validateForm = () => {
         let isValid = true;
         if (location.value === '0') {
-            setError(errlocation,'Geen locatie meegegeven, vul locatie in');
+            setError(errlocation, 'Geen locatie meegegeven, vul locatie in');
             isValid = false;
         }
         if (method.value === "0") {
-            setError(errMethod,'Geen methode meegegeven, vul methode in');
+            setError(errMethod, 'Geen methode meegegeven, vul methode in');
             isValid = false;
         }
         if (!primary.checked && !secondary.checked) {
-            setError(errType,'Geen graad meegegeven, vul graad in');
+            setError(errType, 'Geen graad meegegeven, vul graad in');
             isValid = false;
         }
         if (offer.value === "0") {
-            setError(errOffer,'Geen offer meegegeven, vul offer in');
+            setError(errOffer, 'Geen offer meegegeven, vul offer in');
             isValid = false;
         }
         return isValid;
@@ -101,8 +112,8 @@
         el.style.display = 'block';
         el.innerText = msg;
     }
-    const resetErrors = ()=>{
-        errMethod.style.display ='none';
+    const resetErrors = () => {
+        errMethod.style.display = 'none';
         errOffer.style.display = 'none';
         errType.style.display = 'none';
         errlocation.style.display = 'none';
@@ -113,20 +124,10 @@
         method.value = 0;
         primary.checked = false;
         secondary.checked = false;
-        
+
     }
-    //FETCH REVIEW FROM DB
-    const fetchReview = async (schoolId) => {
-        let reviewContent;
-        try {
-            let review = await fetch("https://schoolsearchserver.lukasdownes.ikdoeict.be/reviews");
-            if(!review.ok) throw Error();
-            reviewContent = await responseBasis.json();
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
+
+
     //DISPLAYING ALL THE FETCHED DATA
     const createHtml = (el) => {
         const result = document.createElement("section");
@@ -142,22 +143,25 @@
         const offerTagText = document.createTextNode(`${el.fields.aanbod}`);
         const netTag = document.createElement("span");
         const netTagText = document.createTextNode(`${el.fields.onderwijsnet}`);
-        //DESCRIPTION
-        const para = document.createElement("p");
-        const paraText = document.createTextNode("Deze school heeft nog geen reviews")
         //WEBSITE
         const web = document.createElement("a")
         const webLink = `www.${el.fields.website}`;
         const webText = document.createTextNode("Website: " + el.fields.naam);
+
+        let review = reviewContent.data.find((item) => item.schoolnr === (el.fields.schoolnr * 1));
+
+
+        //DESCRIPTION
+        const para = document.createElement("p");
+        const paraText = document.createTextNode(review ? review.description : "nog geen omschrijving")
         //RATING
         const ratingDiv = document.createElement("div");
         const ratingSpan = document.createElement("span");
-        const ratingSpanText = document.createTextNode("Score: * * * * *");
+        const ratingSpanText = document.createTextNode(`Score: ${review ? Math.round(review.avgScore*100)/100 : "nog geen score"}`);
         //EIGEN REVIEW/OMSCHRIJVING TOEVOEGEN
         const ownReview = document.createElement("p");
         const ownReviewText = document.createTextNode("Schrijf een eigen review.");
 
-        fetchReview(el.fields.schoolnr);
 
         //HEADER
         header.appendChild(headerText);
@@ -171,7 +175,7 @@
         //DESCRIPTION
         para.appendChild(paraText);
         //WEBSITE
-        web.setAttribute("href",webLink);
+        web.setAttribute("href", webLink);
         web.appendChild(webText);
         //RATING
         ratingDiv.appendChild(ratingSpan);
@@ -188,6 +192,11 @@
         result.appendChild(ownReview);
         resultList2.appendChild(result);
 
+        //ADDING EVENT LISTENERS FOR THE REVIEWS
+        ownReview.addEventListener('click', () => {
+            writeAReview(el.fields.schoolnr*1)
+        })
+
         //ADD CLASSNAMES
         result.className = "result";
         tags.className = "tags";
@@ -200,9 +209,9 @@
     //CHANGING THE POSSIBLE OPTION ACCORDING TO PRIMARY/SECONDARY SCHOOL
     const setSelectOptions = () => {
         const scndOfferArr = ["SO", "BuSO", "DBSO"];
-        const frstOfferArr = ["BA", "BuO","KO","LO"];
+        const frstOfferArr = ["BA", "BuO", "KO", "LO"];
 
-        if(secondary.checked && !primary.checked) {
+        if (secondary.checked && !primary.checked) {
             scndOfferArr.forEach((el) => {
                 document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
             })
@@ -217,8 +226,8 @@
             frstOfferArr.forEach((el) => {
                 document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
             })
-        } 
-        if(secondary.checked && primary.checked) {
+        }
+        if (secondary.checked && primary.checked) {
             scndOfferArr.forEach((el) => {
                 document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
             })
@@ -239,7 +248,7 @@
         //DESCRIPTION
         const para = document.createElement("p");
         const paraText = document.createTextNode("Je zoekresultaten leverden geen resultaten op.");
-        
+
         //HEADER
         header.appendChild(headerText);
         //DESCRIPTION
@@ -253,55 +262,61 @@
         result.className = "result noResults";
         para.className = "description";
     }
-
-    let displaySet = 0;
-    let globalDataBasis2, globalDataSec2;
     const fetchData2 = async () => {
-        const searchQuery = (search.value === "" ? "" : "naam%3D"+search.value);
-        
-        const queryStart = (displaySet*10)
+        const searchQuery = (search.value === "" ? "" : "naam%3D" + search.value);
+
+        const queryStart = (displaySet * 10)
         const rows = (primary.checked && secondary.checked ? "&rows=5" : "&rows=10")
         const locatieQuery = (location.value === "any" ? "" : "&refine.gemeente=" + location.value);
         const aanbodQuery = (offer.value === "any" ? "" : "&refine.aanbod=" + offer.value);
         const netQuery = (method.value === "any" ? "" : "&refine.onderwijsnet=" + method.value);
         const linkBasisScholen2 = `https://data.stad.gent/api/records/1.0/search/?dataset=locaties-basisscholen-gent&q=${searchQuery}&start=${queryStart}${aanbodQuery}${netQuery}${locatieQuery}${rows}`
         const linkSecundaireScholen2 = `https://data.stad.gent/api/records/1.0/search/?dataset=locaties-secundaire-scholen-gent&q=${searchQuery}&start=${queryStart}${aanbodQuery}${netQuery}${locatieQuery}${rows}`
-    
+
         try {
-            let responseBasis = await fetch(linkBasisScholen2);
-            if(!responseBasis.ok) throw Error();
+            const responseBasis = await fetch(linkBasisScholen2);
+            if (!responseBasis.ok) throw Error();
             globalDataBasis2 = await responseBasis.json();
-            let responseSec = await fetch(linkSecundaireScholen2);
+            const responseSec = await fetch(linkSecundaireScholen2);
             if (!responseSec.ok) throw Error();
             globalDataSec2 = await responseSec.json();
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
         }
+        console.log(globalDataBasis2);
         try {
-            if(primary.checked && !secondary.checked) {
+            if (primary.checked && !secondary.checked) {
                 if (globalDataBasis2.nhits === 0) throw Error();
                 globalDataBasis2.records.forEach((el) => createHtml(el));
             }
-            if(!primary.checked && secondary.checked) {
+            if (!primary.checked && secondary.checked) {
                 if (globalDataSec2.nhits === 0) throw Error();
                 globalDataSec2.records.forEach((el) => createHtml(el));
             }
-            if(primary.checked && secondary.checked) {
+            if (primary.checked && secondary.checked) {
                 if (globalDataBasis2.nhits === 0 && globalDataSec2.nhits === 0) throw Error();
                 let dataTemp = globalDataBasis2.records.concat(globalDataSec2.records);
                 dataTemp.forEach((el) => createHtml(el));
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err);
             setZeroResults();
         }
-        
-
+    }
+    //FETCH REVIEWS FROM DB
+    const fetchReview = async (schoolId) => {
+        try {
+            const review = await fetch("https://schoolsearchserver.lukasdownes.ikdoeict.be/reviews");
+            if (!review.ok) throw Error();
+            reviewContent = await review.json();
+        } catch (err) {
+            console.log(err)
+        }
+        console.log(reviewContent.data);
     }
 
     /**
-     * This part of the js is for the infinite scroll effect    
+     * This part of the js is for the infinite scroll effect
      */
 
     let lastKnownScrollPosition = 0;
@@ -309,23 +324,99 @@
     let scrollCount = 1;
 
     function moooooooreData(scrollPos) {
-        console.log(lastKnownScrollPosition)
-        if (scrollPos >= scrollCount*1000) {
+        //console.log(lastKnownScrollPosition)
+        if (scrollPos >= scrollCount * 1000 + 500) {
             fetchData2();
             displaySet++;
             scrollCount++;
         }
     }
 
-    document.addEventListener('scroll', function(e) {
+    document.addEventListener('scroll', function (e) {
         lastKnownScrollPosition = window.scrollY;
-
-        if (!ticking) {
-            window.requestAnimationFrame(function() {
+        if (!ticking && scrollsearch) {
+            window.requestAnimationFrame(function () {
                 moooooooreData(lastKnownScrollPosition);
                 ticking = false;
             });
             ticking = true;
         }
     });
+
+    //UPLOAD FORM
+    const form2 = document.querySelector("#form2 button[type=submit]");
+    const scoreInput = document.querySelector("#score");
+    const reviewPopup = document.querySelector("#form2");
+    const descr = document.querySelector("#descr");
+    const descrErr = document.querySelector("#descrErr");
+    const closebtn = document.querySelector("#form2 svg");
+    closebtn.addEventListener('click',()=>{
+        resetForm2();
+        resetErrors();
+        reviewPopup.classList.toggle("hidden");
+    })
+    scoreInput.addEventListener("input", () => {
+        scoreInput.previousElementSibling.innerHTML = scoreInput.value;
+    })
+    descr.addEventListener("input", () => {
+        descr.nextElementSibling.innerHTML = `${descr.value.length}/200`
+    })
+    //WRITING A NEW REVIEW
+    let schoolnrForReview;
+    const writeAReview = (schoolnr) => {
+        schoolnrForReview = schoolnr;
+        reviewPopup.classList.toggle("hidden");
+    }
+    form2.addEventListener("click", async () => {
+        resetErrors2()
+        const isValid = validateForm2();
+        if (isValid) {
+            await submitReview();
+            resetForm2()
+            reviewPopup.classList.toggle("hidden");
+        }
+    })
+    //SUBMITTING THE NEW REVIEW
+    const submitReview = async () => {
+        const scoreText = scoreInput.value;
+        const reviewText = descr.value;
+        try {
+            const result = await fetch("https://schoolsearchserver.lukasdownes.ikdoeict.be/reviews", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify({
+                    schoolnr: schoolnrForReview,
+                    score: scoreText,
+                    descr: reviewText
+                }),
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const validateForm2 = () => {
+        let isValid = true;
+        if (descr.value === "" || descr.value.length > 200) {
+            setError(descrErr, (location.value === "" ? "Vul een omschrijving in." : "De omschrijving is te lang. Gebruik maximaal 200 tekens."));
+            isValid = false;
+        }
+        if (descr.value.search(/["'@#\\\/´]/) !== -1) {
+            setError(descrErr, "De characters \"'@#\\\/` zijn verboden, gebruik '<<' en '>>' om t quoteren.");
+            isValid = false;
+        }
+        return isValid;
+    }
+    const resetErrors2 = () => {
+        descrErr.style.display = 'none'
+    }
+    const resetForm2 = () => {
+        descr.value = "";
+        descr.nextElementSibling.innerHTML = "0/200"
+        scoreInput.value = 3;
+        scoreInput.previousElementSibling.innerHTML = "3";
+    }
+
+
 })();
