@@ -132,7 +132,7 @@
         const ratingSpanText = document.createTextNode(`Score: ${el.score}`);
         //EIGEN REVIEW/OMSCHRIJVING TOEVOEGEN
         const datum = document.createElement("span");
-        const datumText = document.createTextNode(`${el.datum}`);
+        const datumText = document.createTextNode(`${el.datum.split("T")[0]}`);
 
 
         //HEADER
