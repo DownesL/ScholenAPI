@@ -366,7 +366,7 @@ label>abbr.required, legend>abbr.required {
     left: 40%;
 }
 
-#form2 .close::before, #form3 .close::before {
+#form2 .close::before, #form3 .close::before, #webFormRes .close::before {
     content: "Close";
     display: block;
     color: black;

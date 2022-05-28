@@ -160,6 +160,8 @@
 
     //SUBMITTING THE NEW REVIEW
     const submitReview = async () => {
+        const today = new Date();
+        const date = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
         const result = await fetch("https://schoolsearchserver.lukasdownes.ikdoeict.be/websitereviews/",{
             method : "POST",
             headers : {
@@ -168,7 +170,8 @@
             body : JSON.stringify({
                 name: name.value,
                 review: reviewInput.value,
-                score: score.value
+                score: score.value,
+                datum: date
             }),
         })
         if (!result.ok) throw Error()
