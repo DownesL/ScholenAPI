@@ -10,6 +10,7 @@
     const primary = document.querySelector("#primary");
     const secondary = document.querySelector("#secondary")
 
+    const errSearch = document.querySelector("#searchErr")
     const errlocation = document.querySelector("#locationErr");
     const errType = document.querySelector("#typeErr");
     const errOffer = document.querySelector("#offerErr");
@@ -57,6 +58,7 @@
     resultBtn.addEventListener('click', () => {
         searchArea.classList.toggle('hidden');
         resultList.classList.toggle('hidden');
+        displaySet = 0;
         document.querySelectorAll(".result").forEach((el) => {
             resultList2.removeChild(el)
         });
@@ -90,6 +92,10 @@
     //FORM VALIDATION
     const validateForm = () => {
         let isValid = true;
+        if (search.value.search(/(\s*([\0\b\'\"\n\r\t\%\_\\]*\s*(((select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[\=\>\<=\!\~]+.+)|(let\s+.+[\=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/\*]+\s*.*\s*[\*\/]+)|(\s*(\-\-)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)))(\s*[\;]\s*)*)+)/i) !== -1) {
+            setError(errSearch, 'De formvalidatie detecteerde SQL-injectie, probeer opnieuw');
+            isValid = false;
+        }
         if (location.value === '0') {
             setError(errlocation, 'Geen locatie meegegeven, vul locatie in');
             isValid = false;
@@ -145,7 +151,7 @@
         const netTagText = document.createTextNode(`${el.fields.onderwijsnet}`);
         //WEBSITE
         const web = document.createElement("a")
-        const webLink = `www.${el.fields.website}`;
+        const webLink = `https://${el.fields.website}`;
         const webText = document.createTextNode("Website: " + el.fields.naam);
 
         let review = reviewContent.data.find((item) => item.schoolnr === (el.fields.schoolnr * 1));
@@ -192,9 +198,20 @@
         result.appendChild(ownReview);
         resultList2.appendChild(result);
 
+        result.setAttribute("tabindex","0");
         //ADDING EVENT LISTENERS FOR THE REVIEWS
         ownReview.addEventListener('click', () => {
-            writeAReview(el.fields.schoolnr*1)
+            writeAReview(el.fields.schoolnr*1);
+            document.querySelector("#main").classList.toggle("hidden");
+            document.querySelector("#writeWebRev").classList.toggle("hidden");
+
+        })
+        ownReview.addEventListener('keydown', (e) => {
+            if (e.code === 'Enter') {
+                writeAReview(el.fields.schoolnr*1);
+                document.querySelector("#writeWebRev").classList.toggle("hidden");
+                document.querySelector("#main").classList.toggle("hidden");
+            }
         })
 
         //ADD CLASSNAMES
@@ -205,6 +222,7 @@
         para.className = "description";
         ratingDiv.className = "rating";
         ownReview.className = "leaveAReview";
+        ownReview.setAttribute("tabindex","0");
     }
     //CHANGING THE POSSIBLE OPTION ACCORDING TO PRIMARY/SECONDARY SCHOOL
     const setSelectOptions = () => {
@@ -344,36 +362,48 @@
     });
 
     //UPLOAD FORM
-    const form2 = document.querySelector("#form2 button[type=submit]");
+    const schoolRevSection = document.querySelector("#form2");
+    const schoolRevForm = document.querySelector("#form2 form")
     const scoreInput = document.querySelector("#score");
-    const reviewPopup = document.querySelector("#form2");
     const descr = document.querySelector("#descr");
     const descrErr = document.querySelector("#descrErr");
-    const closebtn = document.querySelector("#form2 svg");
+    const closebtn = document.querySelector("#form2 .close");
+
     closebtn.addEventListener('click',()=>{
         resetForm2();
         resetErrors();
-        reviewPopup.classList.toggle("hidden");
+        schoolRevSection.classList.toggle("hidden");
+        document.querySelector("#main").classList.toggle("hidden");
+        document.querySelector("#writeWebRev").classList.toggle("hidden");
+
     })
-    scoreInput.addEventListener("input", () => {
-        scoreInput.previousElementSibling.innerHTML = scoreInput.value;
+    document.querySelectorAll("input[type=range]").forEach((el)=>{
+        el.addEventListener("input", () => {
+            el.previousElementSibling.innerHTML = el.value;
+        })
     })
-    descr.addEventListener("input", () => {
-        descr.nextElementSibling.innerHTML = `${descr.value.length}/200`
+    document.querySelectorAll("textarea").forEach((el) => {
+        el.addEventListener("input", () => {
+            el.nextElementSibling.innerHTML = `${el.value.length}/200`
+        })
     })
+
     //WRITING A NEW REVIEW
     let schoolnrForReview;
     const writeAReview = (schoolnr) => {
         schoolnrForReview = schoolnr;
-        reviewPopup.classList.toggle("hidden");
+        schoolRevSection.classList.toggle("hidden");
     }
-    form2.addEventListener("click", async () => {
+    schoolRevForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
         resetErrors2()
         const isValid = validateForm2();
         if (isValid) {
             await submitReview();
             resetForm2()
-            reviewPopup.classList.toggle("hidden");
+            schoolRevSection.classList.toggle("hidden");
+            document.querySelector("#writeWebRev").classList.toggle("hidden");
+
         }
     })
     //SUBMITTING THE NEW REVIEW
@@ -399,11 +429,11 @@
     const validateForm2 = () => {
         let isValid = true;
         if (descr.value === "" || descr.value.length > 200) {
-            setError(descrErr, (location.value === "" ? "Vul een omschrijving in." : "De omschrijving is te lang. Gebruik maximaal 200 tekens."));
+            setError(descrErr, (descr.value === "" ? "Vul een omschrijving in." : "De omschrijving is te lang. Gebruik maximaal 200 tekens."));
             isValid = false;
         }
-        if (descr.value.search(/["'@#\\\/´]/) !== -1) {
-            setError(descrErr, "De characters \"'@#\\\/` zijn verboden, gebruik '<<' en '>>' om t quoteren.");
+        if (descr.value.search(/(\s*([\0\b\'\"\n\r\t\%\_\\]*\s*(((select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[\=\>\<=\!\~]+.+)|(let\s+.+[\=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/\*]+\s*.*\s*[\*\/]+)|(\s*(\-\-)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)))(\s*[\;]\s*)*)+)/i) !== -1) {
+            setError(descrErr, "De formvalidatie detecteerde SQL-injectie");
             isValid = false;
         }
         return isValid;
@@ -417,6 +447,5 @@
         scoreInput.value = 3;
         scoreInput.previousElementSibling.innerHTML = "3";
     }
-
 
 })();
