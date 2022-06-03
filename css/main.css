@@ -324,9 +324,12 @@ label>abbr.required, legend>abbr.required {
 .result p:nth-child(8) {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
+    display: none;
 }
 .result:hover > .leaveAReview,
 .result:focus-within > .leaveAReview,
+.result:hover > p:nth-child(8)> ,
+.result:focus-within > .p:nth-child(8),
 .result:hover > .map,
 .result:focus-within > .map {
     display: block;
