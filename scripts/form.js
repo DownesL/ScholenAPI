@@ -135,6 +135,7 @@
 
     //LOAD IN A MAP
     const drawMap = (el,latitude, longitude) => {
+        if (el.childElementCount) return;
         const map = new google.maps.Map(el, {
             center: { lat: latitude, lng: longitude },
             zoom: 15,
