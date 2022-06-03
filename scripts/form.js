@@ -162,6 +162,7 @@
         const webLink = `https://${el.fields.website}`;
         const webText = document.createTextNode("Website: " + el.fields.naam);
         //MAP
+        const ligging = document.createElement("p");
         const mapDiv = document.createElement("div");
 
 
@@ -178,7 +179,6 @@
         //EIGEN REVIEW/OMSCHRIJVING TOEVOEGEN
         const ownReview = document.createElement("p");
         const ownReviewText = document.createTextNode("Schrijf een eigen review.");
-
 
         //HEADER
         header.appendChild(headerText);
@@ -199,6 +199,8 @@
         ratingSpan.appendChild(ratingSpanText);
         //REVIEW
         ownReview.appendChild(ownReviewText);
+        //TEXT TOEVOEGEN AAN LIGGING:
+        ligging.appendChild(document.createTextNode("Ligging:"))
         //SECTION
         result.appendChild(header);
         result.appendChild(tags);
@@ -207,6 +209,7 @@
         result.appendChild(web);
         result.appendChild(ratingDiv);
         result.appendChild(ownReview);
+        result.appendChild(ligging);
         result.appendChild(mapDiv);
         resultList2.appendChild(result);
 

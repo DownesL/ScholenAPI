@@ -321,6 +321,10 @@ label>abbr.required, legend>abbr.required {
     cursor: pointer;
     margin-top: 1rem;
 }
+.result p:nth-child(8) {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
 .result:hover > .leaveAReview,
 .result:focus-within > .leaveAReview,
 .result:hover > .map,
