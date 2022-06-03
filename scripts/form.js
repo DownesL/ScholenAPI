@@ -227,6 +227,9 @@
         result.addEventListener('focus',()=>{
             drawMap(mapDiv,el.fields.geo_point_2d[0],el.fields.geo_point_2d[1]);
         });
+        result.addEventListener('mouseover',()=>{
+            drawMap(mapDiv,el.fields.geo_point_2d[0],el.fields.geo_point_2d[1]);
+        });
 
         //ADD CLASSNAMES
         result.className = "result";
