@@ -133,6 +133,13 @@
 
     }
 
+    //LOAD IN A MAP
+    const drawMap = (el,latitude, longitude) => {
+        const map = new google.maps.Map(el, {
+            center: { lat: latitude, lng: longitude },
+            zoom: 15,
+        });
+    };
 
     //DISPLAYING ALL THE FETCHED DATA
     const createHtml = (el) => {
@@ -153,6 +160,9 @@
         const web = document.createElement("a")
         const webLink = `https://${el.fields.website}`;
         const webText = document.createTextNode("Website: " + el.fields.naam);
+        //MAP
+        const mapDiv = document.createElement("div");
+
 
         let review = reviewContent.data.find((item) => item.schoolnr === (el.fields.schoolnr * 1));
 
@@ -196,6 +206,7 @@
         result.appendChild(web);
         result.appendChild(ratingDiv);
         result.appendChild(ownReview);
+        result.appendChild(mapDiv);
         resultList2.appendChild(result);
 
         result.setAttribute("tabindex","0");
@@ -213,6 +224,9 @@
                 document.querySelector("#main").classList.toggle("hidden");
             }
         })
+        result.addEventListener('focus',()=>{
+            drawMap(mapDiv,el.fields.geo_point_2d[0],el.fields.geo_point_2d[1]);
+        });
 
         //ADD CLASSNAMES
         result.className = "result";
@@ -222,6 +236,7 @@
         para.className = "description";
         ratingDiv.className = "rating";
         ownReview.className = "leaveAReview";
+        mapDiv.className = "map";
         ownReview.setAttribute("tabindex","0");
     }
     //CHANGING THE POSSIBLE OPTION ACCORDING TO PRIMARY/SECONDARY SCHOOL
@@ -360,6 +375,8 @@
             ticking = true;
         }
     });
+    // ^ and this is where it ends
+
 
     //UPLOAD FORM
     const schoolRevSection = document.querySelector("#form2");
