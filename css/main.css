@@ -457,17 +457,11 @@ textarea {
     padding: 1rem;
     width: 73%;
 }
-
 #score, #scoreWeb {
     height: 3rem;
     width: 60%;
     margin: 0 1rem;
 }
-.rating span::after {
-    position: absolute;
-    content: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23222&height=18');
-}
-
 .reviewList {
     width: 80%;
 }
@@ -479,12 +473,24 @@ textarea {
     top: 1rem;
     right: 1rem;
 }
+#webFormRes h2 {
+    margin-bottom: 2rem;
+}
 #webFormRes>div {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 70%;
 }
-
+#webFormRes select {
+    margin-inline: 0;
+}
+.rating span::after {
+    position: absolute;
+    content: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23222&height=18');
+}
 .skip-to-content-link {
     left: 50%;
     position: absolute;
@@ -492,6 +498,23 @@ textarea {
 }
 .skip-to-content-link:focus {
     transform: translateX(-50%);
+}
+
+
+select {
+    border: solid 4px #4159E0;
+    background-color: #FFF;
+    border-radius: var(--borderRad);
+    box-shadow: var(--boxShad);
+    text-align: center;
+    font-size: 18px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 80%;
+    background: url('https://api.iconify.design/bx/chevron-down.svg?height=28') 96% / 15% no-repeat;
+    padding: 5px 35px 5px 5px;
+    height: 100%;
 }
 
 
@@ -528,6 +551,20 @@ textarea {
 
     .results h2 {
         max-width: 80%;
+    }
+    #webFormRes h2 {
+        margin-bottom: 3rem;
+    }
+    #webFormRes>div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        gap: 1rem;
+        width: 55%;
+    }
+    #webFormRes select {
+        height: 3rem;
     }
 
     .checkboxes {

@@ -23,7 +23,7 @@
         skipLink.className = "skip-to-content-link";
     })
 
-    document.querySelector("#webFormRes button").addEventListener('click', async () => {
+    document.querySelector("#webFormRes button:not(.close)").addEventListener('click', async () => {
         document.querySelectorAll(".reviewList section").forEach((el) => {
             reviewList.removeChild(el);
         })
