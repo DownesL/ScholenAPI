@@ -165,7 +165,7 @@
         const webLink = `https://${el.fields.website}`;
         const webText = document.createTextNode("Website: " + el.fields.naam);
         //MAP
-        const ligging = document.createElement("p");
+        const ligging = document.createElement("h4");
         const mapDiv = document.createElement("div");
 
 

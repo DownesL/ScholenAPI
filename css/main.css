@@ -234,7 +234,7 @@ label>abbr.required, legend>abbr.required {
     align-items: center;
     margin: 0 auto;
 }
-.result::after {
+.result:not(.noResults)::after {
     content: "[klik op dit infokaartje voor details]";
     display: flex;
     margin-top: 1rem;
@@ -307,6 +307,9 @@ label>abbr.required, legend>abbr.required {
     content: "°";
     color: dimgray;
 }
+.results h4 {
+    font-weight: normal;
+}
 .legends {
     display: flex;
 }
@@ -366,7 +369,7 @@ label>abbr.required, legend>abbr.required {
     font-size: 1rem;
     padding: 0.5rem;
 }
-.result p:nth-child(7) {
+.result h4:nth-child(7) {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
     display: none;
@@ -382,7 +385,7 @@ label>abbr.required, legend>abbr.required {
 
 .result:focus-within > a,
 .result:focus-within > .leaveAReview,
-.result:focus-within > p:nth-child(7),
+.result:focus-within > h4:nth-child(7),
 .result:focus-within > .map {
     display: block;
 }
