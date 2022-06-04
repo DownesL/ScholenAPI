@@ -24,6 +24,8 @@
     const tagOffers = document.querySelector(".tagLegende .tag.offerTag");
     const netTags = document.querySelector(".tagLegende .tag.netTag");
 
+    const skipLink = document.querySelector(".skip-to-content-link");
+
 
 
     let displaySet = 0;
@@ -58,6 +60,7 @@
     resultBtn.addEventListener('click', () => {
         searchArea.classList.toggle('hidden');
         resultList.classList.toggle('hidden');
+        skipLink.classList.toggle("hidden");
         displaySet = 0;
         document.querySelectorAll(".result").forEach((el) => {
             resultList2.removeChild(el)
@@ -177,7 +180,7 @@
         const ratingSpan = document.createElement("span");
         const ratingSpanText = document.createTextNode(`Score: ${review ? Math.round(review.avgScore*100)/100 : "nog geen score"}`);
         //EIGEN REVIEW/OMSCHRIJVING TOEVOEGEN
-        const ownReview = document.createElement("p");
+        const ownReview = document.createElement("button");
         const ownReviewText = document.createTextNode("Schrijf een eigen review.");
 
         //HEADER
@@ -206,11 +209,11 @@
         result.appendChild(tags);
         result.appendChild(locationHeader);
         result.appendChild(para);
-        result.appendChild(web);
         result.appendChild(ratingDiv);
-        result.appendChild(ownReview);
+        result.appendChild(web);
         result.appendChild(ligging);
         result.appendChild(mapDiv);
+        result.appendChild(ownReview);
         resultList2.appendChild(result);
 
         result.setAttribute("tabindex","0");
@@ -244,7 +247,6 @@
         ratingDiv.className = "rating";
         ownReview.className = "leaveAReview";
         mapDiv.className = "map";
-        ownReview.setAttribute("tabindex","0");
     }
     //CHANGING THE POSSIBLE OPTION ACCORDING TO PRIMARY/SECONDARY SCHOOL
     const setSelectOptions = () => {
@@ -399,7 +401,7 @@
         schoolRevSection.classList.toggle("hidden");
         document.querySelector("#main").classList.toggle("hidden");
         document.querySelector("#writeWebRev").classList.toggle("hidden");
-
+        skipLink.className = "skip-to-content-link";
     })
     document.querySelectorAll("input[type=range]").forEach((el)=>{
         el.addEventListener("input", () => {
