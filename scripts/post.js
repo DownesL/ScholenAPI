@@ -12,23 +12,17 @@
     const reviewSort = document.querySelector("#reviewSorteer");
     const closeBtnRev = document.querySelector("#form3 .close");
     const closeBtnRevList = document.querySelector("#webFormRes .close");
+    const skipLink = document.querySelector(".skip-to-content-link");
 
     closeBtnRevList.addEventListener('click', () => {
         toggleViewNext()
+        skipLink.className = "skip-to-content-link";
     })
-    closeBtnRevList.addEventListener("keydown", function (e) {
-        if (e.code === "Enter") {
-            toggleViewNext();
-        }
-    });
     closeBtnRev.addEventListener('click', ()=>{
         toggleView();
+        skipLink.className = "skip-to-content-link";
     })
-    closeBtnRev.addEventListener("keydown", function (e) {
-        if (e.code === "Enter") {
-            toggleView();
-        }
-    });
+
     document.querySelector("#webFormRes button").addEventListener('click', async () => {
         document.querySelectorAll(".reviewList section").forEach((el) => {
             reviewList.removeChild(el);
@@ -37,6 +31,7 @@
     })
     writeWebRev.addEventListener('click', () => {
         toggleView()
+        skipLink.className = "skip-to-content-link hidden";
     })
 
     const toggleView = () => {
@@ -47,6 +42,7 @@
     const toggleViewNext = () => {
         writeWebRev.classList.toggle("hidden");
         webFormRes.classList.toggle("hidden");
+        skipLink.className = "skip-to-content-link";
         document.querySelector("#main").classList.toggle("hidden");
     }
 
