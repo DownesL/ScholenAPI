@@ -54,7 +54,7 @@ footer p {
     font-weight: bold;
     color: var(--background);
 }
-footer #writeWebRev {
+footer #writeWebRevBtn {
     background-color: var(--background);
     color: var(--text);
     font-size: 1rem;
@@ -73,6 +73,11 @@ h2 {
 
 a {
     color: var(--prim)
+}
+
+[hidden] {
+    display: none !important;
+    overflow: hidden;
 }
 
 #main {
@@ -222,7 +227,7 @@ label>abbr.required, legend>abbr.required {
 }
 
 /* cards */
-.results, #form2 {
+.results, #schoolRev {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -391,11 +396,7 @@ label>abbr.required, legend>abbr.required {
 }
 
 /*review forms*/
-.hidden {
-    display: none !important;
-    overflow: hidden;
-}
-#form2, #form3, #webFormRes {
+#schoolRev, #webRevForm, #webRevFormResults {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -408,17 +409,17 @@ label>abbr.required, legend>abbr.required {
     left: 0;
     background: var(--background);
 }
-#webFormRes {
+#webRevFormResults {
     justify-content: unset;
  }
-#form3 {
+#webRevForm {
     padding: 2rem 0;
 }
-#form3 input {
+#webRevForm input {
     height: 2rem;
 }
 
-#form2 form, #form3 form{
+#schoolRev form, #webRevForm form{
     margin: 0 auto;
 }
 
@@ -435,19 +436,19 @@ label>abbr.required, legend>abbr.required {
 }
 
 
-#form2 .close::after,
-#form3 .close::after,
-#webFormRes .close::after {
+#schoolRev .close::after,
+#webRevForm .close::after,
+#webRevFormResults .close::after {
     content: url('https://api.iconify.design/akar-icons/cross.svg?color=%23222&height=19');
     display: block;
     color: black;
     width: 1rem;
 }
-#form2 label, #form3 label {
+#schoolRev label, #webRevForm label {
     margin: 1rem 0 1rem;
     font-weight: 900;
 }
-#form2 button:not(.close), #form3 button:not(.close) {
+#schoolRev button:not(.close), #webRevForm button:not(.close) {
     width: 80%;
     margin: 3rem 0 1rem;
  }
@@ -476,10 +477,10 @@ textarea {
     top: 1rem;
     right: 1rem;
 }
-#webFormRes h2 {
+#webRevFormResults h2 {
     margin-bottom: 2rem;
 }
-#webFormRes>div {
+#webRevFormResults>div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -487,7 +488,7 @@ textarea {
     gap: 0.5rem;
     width: 70%;
 }
-#webFormRes select {
+#webRevFormResults select {
     margin-inline: 0;
 }
 .rating span::after {
@@ -502,8 +503,6 @@ textarea {
 .skip-to-content-link:focus {
     transform: translateX(-50%);
 }
-
-
 select {
     border: solid 4px #4159E0;
     background-color: #FFF;
@@ -519,7 +518,6 @@ select {
     padding: 5px 35px 5px 5px;
     height: 100%;
 }
-
 
 @media (min-width: 500px){
     form {
@@ -555,10 +553,10 @@ select {
     .results h2 {
         max-width: 80%;
     }
-    #webFormRes h2 {
+    #webRevFormResults h2 {
         margin-bottom: 3rem;
     }
-    #webFormRes>div {
+    #webRevFormResults>div {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -566,7 +564,7 @@ select {
         gap: 1rem;
         width: 55%;
     }
-    #webFormRes select {
+    #webRevFormResults select {
         height: 3rem;
     }
 
@@ -589,7 +587,7 @@ select {
         flex-direction: row;
         flex-wrap: wrap;
     }
-    .results .result {
+    .results .result:not(.noResults) {
         max-width: 40%;
     }
 }

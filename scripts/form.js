@@ -19,18 +19,20 @@
     const searchArea = document.querySelector(".searchArea")
     const resultList = document.querySelector(".results");
     const resultList2 = document.querySelector("#results");
-    const resultBtn = document.querySelector("#newSearchFilter");
+    const newSearchFilter = document.querySelector("#newSearchFilter");
 
     const tagOffers = document.querySelector(".tagLegende .tag.offerTag");
     const netTags = document.querySelector(".tagLegende .tag.netTag");
 
     const skipLink = document.querySelector(".skip-to-content-link");
-
+    const main = document.querySelector("#main");
+    const writeWebRevBtn = document.querySelector("#writeWebRevBtn");
 
 
     let displaySet = 0;
     let globalDataBasis2, globalDataSec2, reviewContent;
     let scrollsearch = false;
+    let zeroResults = false;
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -40,8 +42,10 @@
             console.log('Form is valid');
             searchArea.classList.toggle('hidden');
             resultList.classList.toggle('hidden');
+            searchArea.hidden = true;
+            resultList.hidden = false;
             await fetchReview();
-            await fetchData2();
+            await fetchData();
             displaySet++;
             //resetForm();
         } else {
@@ -57,15 +61,16 @@
         setSelectOptions()
     });
 
-    resultBtn.addEventListener('click', () => {
-        searchArea.classList.toggle('hidden');
-        resultList.classList.toggle('hidden');
-        skipLink.classList.toggle("hidden");
+    newSearchFilter.addEventListener('click', () => {
+        searchArea.hidden = false;
+        resultList.hidden = true;
+        skipLink.hidden = false;
         displaySet = 0;
         document.querySelectorAll(".result").forEach((el) => {
             resultList2.removeChild(el)
         });
         scrollsearch = false;
+        zeroResults = false;
     });
     tagOffers.addEventListener('click', () => {
         if (tagOffers.getAttribute("aria-expanded") === "true") {
@@ -95,15 +100,15 @@
     //FORM VALIDATION
     const validateForm = () => {
         let isValid = true;
-        if (search.value.search(/(\s*([\0\b\'\"\n\r\t\%\_\\]*\s*(((select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[\=\>\<=\!\~]+.+)|(let\s+.+[\=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/\*]+\s*.*\s*[\*\/]+)|(\s*(\-\-)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)))(\s*[\;]\s*)*)+)/i) !== -1) {
+        if (search.value.search(/(\s*([0\b'"\n\r\t%_\\]*\s*(select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[=><!~]+.+)|(let\s+.+[=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/*]+\s*.*\s*[*\/]+)|(\s*(--)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)(\s*[;]\s*)*)+)/i) !== -1) {
             setError(errSearch, 'De formvalidatie detecteerde SQL-injectie, probeer opnieuw');
             isValid = false;
         }
-        if (location.value === '0') {
+        if (location.value === '') {
             setError(errlocation, 'Geen locatie meegegeven, vul locatie in');
             isValid = false;
         }
-        if (method.value === "0") {
+        if (method.value === "") {
             setError(errMethod, 'Geen methode meegegeven, vul methode in');
             isValid = false;
         }
@@ -111,7 +116,7 @@
             setError(errType, 'Geen graad meegegeven, vul graad in');
             isValid = false;
         }
-        if (offer.value === "0") {
+        if (offer.value === "") {
             setError(errOffer, 'Geen offer meegegeven, vul offer in');
             isValid = false;
         }
@@ -137,10 +142,10 @@
     }
 
     //LOAD IN A MAP
-    const drawMap = (el,latitude, longitude) => {
+    const drawMap = (el, latitude, longitude) => {
         if (el.childElementCount) return;
-        const map = new google.maps.Map(el, {
-            center: { lat: latitude, lng: longitude },
+        new google.maps.Map(el, {
+            center: {lat: latitude, lng: longitude},
             zoom: 15,
         });
     };
@@ -178,7 +183,7 @@
         //RATING
         const ratingDiv = document.createElement("div");
         const ratingSpan = document.createElement("span");
-        const ratingSpanText = document.createTextNode(`Score: ${review ? Math.round(review.avgScore*100)/100 : "nog geen score"}`);
+        const ratingSpanText = document.createTextNode(`Score: ${review ? Math.round(review.avgScore * 100) / 100 : "nog geen score"}`);
         //EIGEN REVIEW/OMSCHRIJVING TOEVOEGEN
         const ownReview = document.createElement("button");
         const ownReviewText = document.createTextNode("Schrijf een eigen review.");
@@ -216,26 +221,19 @@
         result.appendChild(ownReview);
         resultList2.appendChild(result);
 
-        result.setAttribute("tabindex","0");
+        result.setAttribute("tabindex", "0");
         //ADDING EVENT LISTENERS FOR THE REVIEWS
         ownReview.addEventListener('click', () => {
-            writeAReview(el.fields.schoolnr*1);
-            document.querySelector("#main").classList.toggle("hidden");
-            document.querySelector("#writeWebRev").classList.toggle("hidden");
+            writeAReview(el.fields.schoolnr * 1);
+            main.hidden = true;
+            writeWebRevBtn.hidden = false;
 
         })
-        ownReview.addEventListener('keydown', (e) => {
-            if (e.code === 'Enter') {
-                writeAReview(el.fields.schoolnr*1);
-                document.querySelector("#writeWebRev").classList.toggle("hidden");
-                document.querySelector("#main").classList.toggle("hidden");
-            }
-        })
-        result.addEventListener('focus',()=>{
-            drawMap(mapDiv,el.fields.geo_point_2d[0],el.fields.geo_point_2d[1]);
+        result.addEventListener('focus', () => {
+            drawMap(mapDiv, el.fields.geo_point_2d[0], el.fields.geo_point_2d[1]);
         });
-        result.addEventListener('mouseover',()=>{
-            drawMap(mapDiv,el.fields.geo_point_2d[0],el.fields.geo_point_2d[1]);
+        result.addEventListener('mouseover', () => {
+            drawMap(mapDiv, el.fields.geo_point_2d[0], el.fields.geo_point_2d[1]);
         });
 
         //ADD CLASSNAMES
@@ -277,11 +275,12 @@
                 document.querySelector(`option[value="${el}"]`).removeAttribute("disabled");
             })
         }
-        offer.value = 0;
-        method.value = 0;
+        offer.value = "";
+        method.value = "";
     }
     //ERROR MESSAGE IF NO RESULTS WERE FOUND
     const setZeroResults = () => {
+        if (zeroResults) return;
         const result = document.createElement("section");
         //HEADER
         const header = document.createElement("h2");
@@ -303,8 +302,10 @@
         //ADD CLASSNAMES
         result.className = "result noResults";
         para.className = "description";
+
+        zeroResults = true;
     }
-    const fetchData2 = async () => {
+    const fetchData = async () => {
         const searchQuery = (search.value === "" ? "" : "naam%3D" + search.value);
 
         const queryStart = (displaySet * 10)
@@ -325,7 +326,7 @@
         } catch (err) {
             console.log(err)
         }
-        console.log(globalDataBasis2);
+
         try {
             if (primary.checked && !secondary.checked) {
                 if (globalDataBasis2.nhits === 0) throw Error();
@@ -346,7 +347,7 @@
         }
     }
     //FETCH REVIEWS FROM DB
-    const fetchReview = async (schoolId) => {
+    const fetchReview = async () => {
         try {
             const review = await fetch("https://schoolsearchserver.lukasdownes.ikdoeict.be/reviews");
             if (!review.ok) throw Error();
@@ -366,9 +367,8 @@
     let scrollCount = 1;
 
     function moooooooreData(scrollPos) {
-        //console.log(lastKnownScrollPosition)
         if (scrollPos >= scrollCount * 1000 + 500) {
-            fetchData2();
+            fetchData();
             displaySet++;
             scrollCount++;
         }
@@ -388,22 +388,23 @@
 
 
     //UPLOAD FORM
-    const schoolRevSection = document.querySelector("#form2");
-    const schoolRevForm = document.querySelector("#form2 form")
+    const schoolRevSection = document.querySelector("#schoolRev");
+    const schoolRevForm = document.querySelector("#schoolRev form")
     const scoreInput = document.querySelector("#score");
     const descr = document.querySelector("#descr");
     const descrErr = document.querySelector("#descrErr");
-    const closebtn = document.querySelector("#form2 .close");
+    const closebtn = document.querySelector("#schoolRev .close");
 
-    closebtn.addEventListener('click',()=>{
+    closebtn.addEventListener('click', () => {
         resetForm2();
         resetErrors();
-        schoolRevSection.classList.toggle("hidden");
-        document.querySelector("#main").classList.toggle("hidden");
-        document.querySelector("#writeWebRev").classList.toggle("hidden");
-        skipLink.className = "skip-to-content-link";
+        main.hidden = false;
+        writeWebRevBtn.hidden = false;
+        schoolRevSection.hidden = true;
+        skipLink.hidden = false;
+
     })
-    document.querySelectorAll("input[type=range]").forEach((el)=>{
+    document.querySelectorAll("input[type=range]").forEach((el) => {
         el.addEventListener("input", () => {
             el.previousElementSibling.innerHTML = el.value;
         })
@@ -418,7 +419,8 @@
     let schoolnrForReview;
     const writeAReview = (schoolnr) => {
         schoolnrForReview = schoolnr;
-        schoolRevSection.classList.toggle("hidden");
+        schoolRevSection.hidden = false;
+
     }
     schoolRevForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -427,9 +429,9 @@
         if (isValid) {
             await submitReview();
             resetForm2()
-            schoolRevSection.classList.toggle("hidden");
-            document.querySelector("#writeWebRev").classList.toggle("hidden");
-
+            schoolRevSection.hidden = true;
+            writeWebRevBtn.hidden = false;
+            main.hidden = false;
         }
     })
     //SUBMITTING THE NEW REVIEW
@@ -448,6 +450,7 @@
                     descr: reviewText
                 }),
             })
+            if(!result.ok) throw Error();
         } catch (err) {
             console.log(err);
         }
@@ -458,7 +461,7 @@
             setError(descrErr, (descr.value === "" ? "Vul een omschrijving in." : "De omschrijving is te lang. Gebruik maximaal 200 tekens."));
             isValid = false;
         }
-        if (descr.value.search(/(\s*([\0\b\'\"\n\r\t\%\_\\]*\s*(((select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[\=\>\<=\!\~]+.+)|(let\s+.+[\=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/\*]+\s*.*\s*[\*\/]+)|(\s*(\-\-)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)))(\s*[\;]\s*)*)+)/i) !== -1) {
+        if (descr.value.search(/(\s*([0\b'"\n\r\t%_\\]*\s*(select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[=><!~]+.+)|(let\s+.+[=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/*]+\s*.*\s*[*\/]+)|(\s*(--)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)(\s*[;]\s*)*)+)/i) !== -1) {
             setError(descrErr, "De formvalidatie detecteerde SQL-injectie");
             isValid = false;
         }

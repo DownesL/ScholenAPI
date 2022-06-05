@@ -1,54 +1,51 @@
 (function() {
-    const form = document.querySelector("#form3 form");
+    const form = document.querySelector("#webRevForm form");
+
     const nameErr = document.querySelector("#naamErr");
     const reviewErr = document.querySelector("#reviewErr");
+
     const name = document.querySelector("#naam");
     const reviewInput = document.querySelector("#review");
     const score = document.querySelector("#scoreWeb")
-    const formSection = document.querySelector("#form3");
-    const webFormRes = document.querySelector("#webFormRes");
-    const writeWebRev = document.querySelector("#writeWebRev");
+
+    const webRevForm = document.querySelector("#webRevForm");
+    const webRevFormResults = document.querySelector("#webRevFormResults");
+    const writeWebRevBtn = document.querySelector("#writeWebRevBtn");
+
     const reviewList = document.querySelector(".reviewList")
+
     const reviewSort = document.querySelector("#reviewSorteer");
-    const closeBtnRev = document.querySelector("#form3 .close");
-    const closeBtnRevList = document.querySelector("#webFormRes .close");
-    const skipLink = document.querySelector(".skip-to-content-link");
 
-    closeBtnRevList.addEventListener('click', () => {
-        toggleViewNext()
-        skipLink.className = "skip-to-content-link";
-    })
+    const closeBtnRev = document.querySelector("#webRevForm .close");
+    const closeBtnRevResults = document.querySelector("#webRevFormResults .close");
+
+    const skiplink = document.querySelector(".skip-to-content-link");
+
+    const main = document.querySelector("#main");
+
+
     closeBtnRev.addEventListener('click', ()=>{
-        toggleView();
-        skipLink.className = "skip-to-content-link";
+        toggleView(false,false,true,true,true);
     })
-
-    document.querySelector("#webFormRes button:not(.close)").addEventListener('click', async () => {
+    closeBtnRevResults.addEventListener('click', () => {
+        toggleView(false, false,true,true,true);
+    })
+    writeWebRevBtn.addEventListener('click', () => {
+        toggleView(true,true,false,true,true);
+    })
+    document.querySelector("#webRevFormResults button:not(.close)").addEventListener('click', async () => {
         document.querySelectorAll(".reviewList section").forEach((el) => {
             reviewList.removeChild(el);
         })
         await getReviews(reviewSort.value);
     })
-    writeWebRev.addEventListener('click', () => {
-        toggleView()
-        skipLink.className = "skip-to-content-link hidden";
-    })
-
-    const toggleView = () => {
-        writeWebRev.classList.toggle("hidden");
-        formSection.classList.toggle("hidden");
-        document.querySelector("#main").classList.toggle("hidden");
+    const toggleView = (mainState, writeWebRevBtnState, webRevFormState, webRevFormResultsState, skiplinkState) => {
+        main.hidden = mainState;
+        writeWebRevBtn.hidden = writeWebRevBtnState;
+        webRevForm.hidden = webRevFormState;
+        webRevFormResults.hidden = webRevFormResultsState;
+        skiplink.hidden = skiplinkState;
     }
-    const toggleViewNext = () => {
-        writeWebRev.classList.toggle("hidden");
-        webFormRes.classList.toggle("hidden");
-        skipLink.className = "skip-to-content-link";
-        document.querySelector("#main").classList.toggle("hidden");
-    }
-
-
-
-
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -62,8 +59,8 @@
             } catch (err) {
                 console.log(err)
             }
-            formSection.classList.toggle('hidden');
-            webFormRes.classList.toggle('hidden');
+            webRevForm.hidden = true;
+            webRevFormResults.hidden = false;
             resetForm();
         } else {
             console.log('Form is invalid')
@@ -83,11 +80,11 @@
             setError(reviewErr,"Gelieve een review te schrijven.")
             isvalid = false;
         }
-        if (name.value.search(/(\s*([\0\b\'\"\n\r\t\%\_\\]*\s*(((select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[\=\>\<=\!\~]+.+)|(let\s+.+[\=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/\*]+\s*.*\s*[\*\/]+)|(\s*(\-\-)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)))(\s*[\;]\s*)*)+)/i) !== -1) {
+        if (name.value.search(/(\s*([0\b'"\n\r\t%_\\]*\s*(select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[=><!~]+.+)|(let\s+.+[=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/*]+\s*.*\s*[*\/]+)|(\s*(--)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)(\s*[;]\s*)*)+)/i) !== -1) {
             setError(nameErr, "De formvalidatie detecteerde SQL-injectie, probeer iets anders.")
             isvalid = false;
         }
-        if (reviewInput.value.search(/(\s*([\0\b\'\"\n\r\t\%\_\\]*\s*(((select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[\=\>\<=\!\~]+.+)|(let\s+.+[\=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/\*]+\s*.*\s*[\*\/]+)|(\s*(\-\-)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)))(\s*[\;]\s*)*)+)/i) !== -1){
+        if (reviewInput.value.search(/(\s*([0\b'"\n\r\t%_\\]*\s*(select\s*.+\s*from\s*.+)|(insert\s*.+\s*into\s*.+)|(update\s*.+\s*set\s*.+)|(delete\s*.+\s*from\s*.+)|(drop\s*.+)|(truncate\s*.+)|(alter\s*.+)|(exec\s*.+)|(\s*(all|any|not|and|between|in|like|or|some|contains|containsall|containskey)\s*.+[=><!~]+.+)|(let\s+.+[=]\s*.*)|(begin\s*.*\s*end)|(\s*[\/*]+\s*.*\s*[*\/]+)|(\s*(--)\s*.*\s+)|(\s*(contains|containsall|containskey)\s+.*)(\s*[;]\s*)*)+)/i) !== -1){
             setError(reviewErr, "De formvalidatie detecteerde SQL-injectie, probeer iets anders.")
             isvalid = false;
         }
